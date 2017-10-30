@@ -41,4 +41,6 @@ function _loop() {
   return requestAnimationFrame(_loop);
 }
 
-A.init('_loop');
+(function () {
+  A.init('_loop', _loop);
+}());

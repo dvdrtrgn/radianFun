@@ -1,4 +1,5 @@
 var UTIL = {
+  // store run time
   startTime: Date.now(),
   clearCanvas: function () {
     this.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -8,6 +9,7 @@ var UTIL = {
     this.arc(x, y, radius, 0, 2 * Math.PI, false);
     this.stroke();
   },
+  // get coordinates from set of all positions
   indexPosition: function (i, alt) {
     var w = this.width;
     var y = (i / w) | 0;
@@ -18,9 +20,11 @@ var UTIL = {
       x: rev ? w - x : x,
     };
   },
+  // get elapsed time
   runTime: function () {
     return Date.now() - this.startTime;
   },
+  // translate units
   rad2deg: function (rad) {
     return rad / Math.PI * 180.0;
   },
