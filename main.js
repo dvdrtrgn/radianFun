@@ -1,9 +1,10 @@
-/*global UTIL, Angle, */
+/*global UTIL, Angle, Space, */
 var W = window;
 var C = W.console;
 var U = UTIL;
 var A = {
   arc: new Angle(),
+  grid: new Space(),
   circ: function (r, x, y) {
     U.drawCircle.call(A.ctx, x, y, r);
   },
@@ -11,13 +12,13 @@ var A = {
     U.clearCanvas.call(A.ctx);
   },
   scan: function () {
-    return U.indexPosition.call(A, U.runTime(), true);
+    return A.grid.indexPosition(U.runTime(), true);
   },
   init: function (loop) {
     A.can = document.getElementById('Test');
     A.ctx = A.can.getContext('2d');
-    A.width = A.can.width = W.innerWidth;
-    A.height = A.can.height = W.innerHeight;
+    A.grid = new Space(W.innerWidth, W.innerHeight);
+    A.can.width = A.grid.w, A.can.height = A.grid.h;
     W.addEventListener('click', function () {
       W[loop] = function () {};
     });

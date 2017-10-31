@@ -9,17 +9,6 @@ var UTIL = {
     this.arc(x, y, radius, 0, 2 * Math.PI, false);
     this.stroke();
   },
-  // get coordinates from set of all positions
-  indexPosition: function (i, alt) {
-    var w = this.width;
-    var y = (i / w) | 0;
-    var rev = (alt && y % 2);
-    var x = i % w;
-    return {
-      y: y,
-      x: rev ? w - x : x,
-    };
-  },
   // get elapsed time
   runTime: function () {
     return Date.now() - this.startTime;
