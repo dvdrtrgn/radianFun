@@ -1,10 +1,11 @@
-/*global UTIL, Angle, Space, */
+/*global UTIL, Angle, Point, Space, */
 var W = window;
 var C = W.console;
 var U = UTIL;
 var A = {
   arc: new Angle(),
   grid: new Space(),
+  pos: new Point(),
   circ: function (r, x, y) {
     U.drawCircle.call(A.ctx, x, y, r);
   },
@@ -26,21 +27,12 @@ var A = {
   },
 };
 
-function swing(pos, amount) {
-  var rad = A.arc.rad;
-  return {
-    x: pos.x + Math.cos(rad) * amount,
-    y: pos.y + Math.sin(rad) * amount,
-  };
-}
-
 function _loop() {
-  var pos = A.scan();
-  pos.y *= 10;
   A.arc.deg = U.runTime();
-  pos = swing(pos, 100);
-  // A.clear();
-  A.circ(8, pos.x, pos.y);
+  A.pos.read(A.scan());
+  A.pos.y *= 10;
+  A.pos.translate(100, A.arc);
+  A.circ(8, A.pos.x, A.pos.y);
   return requestAnimationFrame(_loop);
 }
 
