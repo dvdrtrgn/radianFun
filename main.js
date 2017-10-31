@@ -7,35 +7,43 @@ var A = {
   grid: new Space(),
   pos: new Point(),
   circ: function (r, x, y) {
-    U.drawCircle.call(A.ctx, x, y, r);
+    U.drawCircle.call(this.ctx, x, y, r);
   },
   clear: function () {
-    U.clearCanvas.call(A.ctx);
+    U.clearCanvas.call(this.ctx);
   },
   scan: function () {
-    return A.grid.indexPosition(U.runTime(), true);
+    return this.grid.indexPosition(U.runTime(), true);
   },
-  init: function (loop) {
-    A.can = document.getElementById('Test');
-    A.ctx = A.can.getContext('2d');
-    A.grid = new Space(W.innerWidth, W.innerHeight);
-    A.can.width = A.grid.w, A.can.height = A.grid.h;
-    W.addEventListener('click', function () {
-      W[loop] = function () {};
-    });
-    C.log(A, loop && W[loop]());
+  stop: function () {},
+  start: function () {
+    // kicker
+    this.loop = function () {
+      this.run(), requestAnimationFrame(this.loop);
+    }.bind(this);
+    // killer
+    this.stop = function () {
+      this.loop = function () {};
+    };
+    return this.loop(), this;
+  },
+  init: function (fn) {
+    this.run = fn;
+    this.can = document.getElementById('Test');
+    this.ctx = this.can.getContext('2d');
+    this.grid = new Space(W.innerWidth, W.innerHeight);
+    this.can.width = this.grid.w, this.can.height = this.grid.h;
+    C.log(this.start());
+    W.addEventListener('click', this.stop.bind(this));
   },
 };
 
-function _loop() {
-  A.arc.deg = U.runTime();
-  A.pos.read(A.scan());
-  A.pos.y *= 10;
-  A.pos.translate(100, A.arc);
-  A.circ(8, A.pos.x, A.pos.y);
-  return requestAnimationFrame(_loop);
-}
-
 (function () {
-  A.init('_loop', _loop);
+  A.init(function draw() {
+    this.arc.deg = U.runTime();
+    this.pos.read(this.scan());
+    this.pos.y *= 10;
+    this.pos.translate(100, this.arc);
+    this.circ(8, this.pos.x, this.pos.y);
+  });
 }());
