@@ -24,13 +24,6 @@ var UTIL = {
   runTime: function () {
     return Date.now() - this.startTime;
   },
-  // translate units
-  rad2deg: function (rad) {
-    return rad / Math.PI * 180.0;
-  },
-  deg2rad: function (deg) {
-    return deg * Math.PI / 180.0;
-  },
 };
 
 UTIL;

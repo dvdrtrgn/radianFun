@@ -29,6 +29,10 @@ const Angle = (function () {
       },
     });
   }
+  // translate units
+  ANG.rad2deg = rad2deg;
+  ANG.deg2rad = deg2rad;
+
   return ANG;
 }());
 
