@@ -6,6 +6,12 @@ var A = {
   arc: new Angle(),
   grid: new Space(),
   pos: new Point(),
+  time: {
+    started: Date.now(), // store run time
+    get elapsed () { // calc elapsed time
+      return Date.now() - this.started;
+    },
+  },
   circ: function (r, x, y) {
     U.drawCircle.call(this.ctx, x, y, r);
   },
@@ -13,7 +19,7 @@ var A = {
     U.clearCanvas.call(this.ctx);
   },
   scan: function () {
-    return this.grid.indexPosition(U.runTime(), true);
+    return this.grid.indexPosition(this.time.elapsed, true);
   },
   stop: function () {},
   start: function () {
@@ -40,7 +46,7 @@ var A = {
 
 (function () {
   A.init(function draw() {
-    this.arc.deg = U.runTime();
+    this.arc.deg = this.time.elapsed;
     this.pos.read(this.scan());
     this.pos.y *= 10;
     this.pos.translate(100, this.arc);
