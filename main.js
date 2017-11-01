@@ -1,25 +1,16 @@
-/*global UTIL, Angle, Point, Space, */
+/*global Angle, Draw, Point, Space, */
 var W = window;
 var C = W.console;
-var U = UTIL;
 var A = {
   arc: new Angle(),
-  grid: new Space(),
+  draw: null,
+  grid: null,
   pos: new Point(),
   time: {
     started: Date.now(), // store run time
     get elapsed() { // calc elapsed time
       return Date.now() - this.started;
     },
-  },
-  circ: function (r, x, y) {
-    U.drawCircle.call(this.ctx, x, y, r);
-  },
-  clear: function () {
-    U.clearCanvas.call(this.ctx);
-  },
-  fade: function () {
-    U.fadeCanvas.call(this.ctx);
   },
   scan: function () {
     return this.grid.indexPosition(this.time.elapsed, true);
@@ -38,10 +29,9 @@ var A = {
   },
   init: function (fn) {
     this.run = fn;
-    this.can = document.getElementById('Test');
-    this.ctx = this.can.getContext('2d');
     this.grid = new Space(W.innerWidth, W.innerHeight);
-    this.can.width = this.grid.w, this.can.height = this.grid.h;
+    this.draw = new Draw('Test', this.grid);
+
     C.log(this.start());
     W.addEventListener('click', this.stop.bind(this));
   },
@@ -58,12 +48,12 @@ var A = {
     var scan = this.scan();
     var size = radius + scan.y; // grow
 
-    this.fade(); // do not clear
+    this.draw.fade(); // do not clear
     this.arc.deg = time;
     this.pos.read(scan);
     this.pos.y *= vscale;
     this.pos.y += offset;
     this.pos.translate(bounce, this.arc);
-    this.circ(size, this.pos.x, this.pos.y);
+    this.draw.circle(this.pos.x, this.pos.y, size);
   });
 }());
