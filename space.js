@@ -10,10 +10,13 @@ const Space = (function () {
         H = W.h, W = W.w;
       }
     }
+
     let val = {
       w: forceNumber(W),
       h: forceNumber(H),
+      limit: null,
     };
+
     Object.defineProperties(this, {
       w: {
         get: () => val.w,
@@ -32,10 +35,12 @@ const Space = (function () {
       // get coordinates from set of all positions
       indexPosition: {
         value: function (i, alt) {
-          i = i % (this.w * this.h);
+          i = i % val.limit;
+
           let x = i % this.w;
           let y = (i / this.w) | 0;
           let rev = (alt && y % 2);
+
           return {
             x: rev ? this.w - x : x,
             y: y,
@@ -43,6 +48,8 @@ const Space = (function () {
         },
       },
     });
+
+    val.limit = this.w * this.h;
   }
 
   return SPC;

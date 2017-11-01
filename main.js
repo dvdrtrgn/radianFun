@@ -8,7 +8,7 @@ var A = {
   pos: new Point(),
   time: {
     started: Date.now(), // store run time
-    get elapsed () { // calc elapsed time
+    get elapsed() { // calc elapsed time
       return Date.now() - this.started;
     },
   },
@@ -17,6 +17,9 @@ var A = {
   },
   clear: function () {
     U.clearCanvas.call(this.ctx);
+  },
+  fade: function () {
+    U.fadeCanvas.call(this.ctx);
   },
   scan: function () {
     return this.grid.indexPosition(this.time.elapsed, true);
@@ -45,11 +48,22 @@ var A = {
 };
 
 (function () {
+  var radius = 10;
+  var bounce = 30;
+  var vscale = 20;
+  var offset = 100;
+
   A.init(function draw() {
-    this.arc.deg = this.time.elapsed;
-    this.pos.read(this.scan());
-    this.pos.y *= 10;
-    this.pos.translate(100, this.arc);
-    this.circ(8, this.pos.x, this.pos.y);
+    var time = this.time.elapsed;
+    var scan = this.scan();
+    var size = radius + scan.y; // grow
+
+    this.fade(); // do not clear
+    this.arc.deg = time;
+    this.pos.read(scan);
+    this.pos.y *= vscale;
+    this.pos.y += offset;
+    this.pos.translate(bounce, this.arc);
+    this.circ(size, this.pos.x, this.pos.y);
   });
 }());
