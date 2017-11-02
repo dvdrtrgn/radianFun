@@ -5,17 +5,17 @@ let R;
 
 function test1() {
   R = new Runner();
-  let arc = new Angle();
-  let pos = new Point();
-  let grid = new Space(W.innerWidth, W.innerHeight);
-  let draw = new Draw('Test', grid);
+  let ang = new Angle();
+  let pnt = new Point();
+  let spc = new Space(W.innerWidth, W.innerHeight);
+  let drw = new Draw('Test', spc);
   let Cf = {
     radius: 10,
     bounce: 30,
     vscale: 20,
     offset: 100,
     scan: function () {
-      return grid.indexPosition(R.time.elapsed, true);
+      return spc.indexPosition(R.time.elapsed, true);
     },
   };
 
@@ -24,14 +24,13 @@ function test1() {
     let scan = Cf.scan();
     let size = Cf.radius + scan.y; // grow
 
-    arc.deg = time;
-    pos.read(scan);
-    pos.y *= Cf.vscale;
-    pos.y += Cf.offset;
-    pos.translate(Cf.bounce, arc);
+    ang.deg = time;
+    pnt.read(scan);
+    pnt.y = Cf.vscale * pnt.y + Cf.offset;
+    pnt.translate(Cf.bounce, ang);
 
-    draw.fade(); // do not clear
-    draw.circle(pos.x, pos.y, size);
+    drw.fade(); // do not clear
+    drw.circle(pnt.x, pnt.y, size);
   });
 }
 
