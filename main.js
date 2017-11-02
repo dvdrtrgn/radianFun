@@ -1,25 +1,24 @@
 /*global Draw, Runner, Space, Vector, */
-var W = window;
-var C = W.console;
-let R;
+const W = window;
+const C = W.console;
+const SPC = new Space(W.innerWidth, W.innerHeight);
+const DRW = new Draw('Test', SPC);
+const RNR = new Runner();
 
 function test1() {
-  R = new Runner();
   let pnt = new Vector();
-  let spc = new Space(W.innerWidth, W.innerHeight);
-  let drw = new Draw('Test', spc);
   let Cf = {
     radius: 10,
     bounce: 30,
     vscale: 20,
     offset: 100,
     scan: function () {
-      return spc.indexPosition(R.time.elapsed, true);
+      return SPC.indexPosition(RNR.time.elapsed, true);
     },
   };
 
-  R.init(function () { // draw
-    let time = R.time.elapsed;
+  RNR.init(function () { // draw
+    let time = RNR.time.elapsed;
     let scan = Cf.scan();
     let size = Cf.radius + scan.y; // grow
 
@@ -27,8 +26,8 @@ function test1() {
     pnt.y = Cf.vscale * pnt.y + Cf.offset;
     pnt.offset(Cf.bounce, time);
 
-    drw.fade(); // do not clear
-    drw.circle(pnt.x, pnt.y, size);
+    DRW.fade(); // do not clear
+    DRW.circle(pnt.x, pnt.y, size);
   });
 }
 
