@@ -1,12 +1,11 @@
-/*global Angle, Draw, Point, Runner, Space, */
+/*global Draw, Runner, Space, Vector, */
 var W = window;
 var C = W.console;
 let R;
 
 function test1() {
   R = new Runner();
-  let ang = new Angle();
-  let pnt = new Point();
+  let pnt = new Vector();
   let spc = new Space(W.innerWidth, W.innerHeight);
   let drw = new Draw('Test', spc);
   let Cf = {
@@ -24,10 +23,9 @@ function test1() {
     let scan = Cf.scan();
     let size = Cf.radius + scan.y; // grow
 
-    ang.deg = time;
     pnt.read(scan);
     pnt.y = Cf.vscale * pnt.y + Cf.offset;
-    pnt.translate(Cf.bounce, ang);
+    pnt.offset(Cf.bounce, time);
 
     drw.fade(); // do not clear
     drw.circle(pnt.x, pnt.y, size);
