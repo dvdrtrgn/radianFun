@@ -1,13 +1,7 @@
 const Vector = (function () {
   /*
-    x       // size x
-    y       // size y
-    mag     // get hypotenuse size
 ?   deg     // angle in degrees
 ?   rad     // angle in radians
-    norm()  // divide all by hypot
-    add()   // add x and y
-    sub()   // subtract x and y
 ?   mult()  // scale up x and y
 ?   div()   // scale down x and y
   */
@@ -15,7 +9,7 @@ const Vector = (function () {
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
   const forcenum = (n, m) => Number(n) || m || 0;
-  const hypot = (x, y) => (x + y) ? danger(Math.sqrt(x * x + y * y)) : 0;
+  const hypot = (x, y) => (x || y) ? danger(Math.sqrt(x * x + y * y)) : 0;
   const simp = (n, m) => parseFloat(n.toFixed(m || 7));
   const rando = (mag = 1) => mag * (Math.random() * 2 - 1);
   const deg2rad = (deg) => deg * Math.PI / 180.0;
@@ -51,6 +45,7 @@ const Vector = (function () {
   function VEC(X, Y) {
     let I = this;
     let val = {
+      lm: undefined,
       mg: 0,
       x: 0,
       y: 0,
@@ -64,9 +59,19 @@ const Vector = (function () {
       } else {
         val.mg = hypot(val.x, val.y);
       }
+      if (val.mg > val.lm) {
+        I.mag = val.lm;
+      }
     }
 
     Object.defineProperties(I, {
+      limit: {
+        get: () => val.lm,
+        set: (num) => {
+          val.lm = forcenum(num, 1e-9);
+          adjust();
+        },
+      },
       x: {
         get: () => val.x,
         set: (num) => {
