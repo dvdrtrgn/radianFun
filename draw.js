@@ -20,10 +20,12 @@ const Draw = (function () {
       },
       clear: function () {
         ctx.clearRect(0, 0, can.width, can.height);
+        return this;
       },
       fade: function () {
         ctx.fillStyle = mist;
         ctx.fillRect(0, 0, can.width, can.height);
+        return this;
       },
     });
   }

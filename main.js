@@ -6,28 +6,22 @@ const DRW = new Draw('Test', SPC);
 const RNR = new Runner();
 
 function test1() {
-  let pnt = new Vector();
   let Cf = {
-    radius: 10,
     bounce: 30,
     vscale: 20,
-    offset: 100,
-    scan: function () {
-      return SPC.indexPosition(RNR.time.elapsed, true);
-    },
   };
+  let loc = new Vector();
 
-  RNR.init(function () { // draw
+  RNR.init(function () { // update
     let time = RNR.time.elapsed;
-    let scan = Cf.scan();
-    let size = Cf.radius + scan.y; // grow
+    let scan = SPC.indexPosition(time, true);
+    let size = scan.y + 5; // grow
 
-    pnt.read(scan);
-    pnt.y = Cf.vscale * pnt.y + Cf.offset;
-    pnt.offset(Cf.bounce, time);
-
-    DRW.fade(); // do not clear
-    DRW.circle(pnt.x, pnt.y, size);
+    loc.read(scan);
+    loc.y = Cf.vscale * size;
+    loc.offset(Cf.bounce, time);
+    // do not clear
+    DRW.fade().circle(loc.x, loc.y, size);
   });
 }
 
