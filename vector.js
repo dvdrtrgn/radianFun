@@ -11,12 +11,14 @@ const Vector = (function () {
 ?   mult()  // scale up x and y
 ?   div()   // scale down x and y
   */
+  const C = window.console;
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
   const forcenum = (n, m) => Number(n) || m || 0;
   const hypot = (x, y) => danger(Math.sqrt(x * x + y * y));
   const simp = (n, m) => parseFloat(n.toFixed(m || 7));
-  const C = window.console;
+  const deg2rad = (deg) => deg * Math.PI / 180.0;
+  // const rad2deg = (rad) => rad / Math.PI * 180.0;
 
   // ----------------------------
   // HELP
@@ -36,8 +38,8 @@ const Vector = (function () {
     return obj;
   }
 
-  function vector(dist, ang, obj) {
-    let rad = ang && ang.rad ? ang.rad : forcenum(ang);
+  function vector(dist, deg, obj) {
+    let rad = deg2rad(forcenum(deg));
     obj.x += Math.cos(rad) * dist;
     obj.y += Math.sin(rad) * dist;
     return obj;
@@ -89,8 +91,8 @@ const Vector = (function () {
     read: function (x, y) {
       return parse(x, y, this);
     },
-    offset: function (dist, ang) {
-      return vector(dist, ang, this);
+    offset: function (dist, deg) {
+      return vector(dist, deg, this);
     },
     add: function (vect) {
       this.x += vect.x, this.y += vect.y;
@@ -111,8 +113,8 @@ const Vector = (function () {
   VEC.read = function (x, y) {
     return parse(x, y, new VEC);
   };
-  VEC.offset = function (dist, ang) {
-    return vector(dist, ang, new VEC);
+  VEC.offset = function (dist, deg) {
+    return vector(dist, deg, new VEC);
   };
 
   return VEC;
