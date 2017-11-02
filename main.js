@@ -1,59 +1,38 @@
-/*global Angle, Draw, Point, Space, */
+/*global Angle, Draw, Point, Runner, Space, */
 var W = window;
 var C = W.console;
-var A = {
-  arc: new Angle(),
-  draw: null,
-  grid: null,
-  pos: new Point(),
-  time: {
-    started: Date.now(), // store run time
-    get elapsed() { // calc elapsed time
-      return Date.now() - this.started;
+let R;
+
+function test1() {
+  R = new Runner();
+  let arc = new Angle();
+  let pos = new Point();
+  let grid = new Space(W.innerWidth, W.innerHeight);
+  let draw = new Draw('Test', grid);
+  let Cf = {
+    radius: 10,
+    bounce: 30,
+    vscale: 20,
+    offset: 100,
+    scan: function () {
+      return grid.indexPosition(R.time.elapsed, true);
     },
-  },
-  scan: function () {
-    return this.grid.indexPosition(this.time.elapsed, true);
-  },
-  stop: function () {},
-  start: function () {
-    // kicker
-    this.loop = function () {
-      this.run(), requestAnimationFrame(this.loop);
-    }.bind(this);
-    // killer
-    this.stop = function () {
-      this.loop = function () {};
-    };
-    return this.loop(), this;
-  },
-  init: function (fn) {
-    this.run = fn;
-    this.grid = new Space(W.innerWidth, W.innerHeight);
-    this.draw = new Draw('Test', this.grid);
+  };
 
-    C.log(this.start());
-    W.addEventListener('click', this.stop.bind(this));
-  },
-};
+  R.init(function () { // draw
+    let time = R.time.elapsed;
+    let scan = Cf.scan();
+    let size = Cf.radius + scan.y; // grow
 
-(function () {
-  var radius = 10;
-  var bounce = 30;
-  var vscale = 20;
-  var offset = 100;
+    arc.deg = time;
+    pos.read(scan);
+    pos.y *= Cf.vscale;
+    pos.y += Cf.offset;
+    pos.translate(Cf.bounce, arc);
 
-  A.init(function draw() {
-    var time = this.time.elapsed;
-    var scan = this.scan();
-    var size = radius + scan.y; // grow
-
-    this.draw.fade(); // do not clear
-    this.arc.deg = time;
-    this.pos.read(scan);
-    this.pos.y *= vscale;
-    this.pos.y += offset;
-    this.pos.translate(bounce, this.arc);
-    this.draw.circle(this.pos.x, this.pos.y, size);
+    draw.fade(); // do not clear
+    draw.circle(pos.x, pos.y, size);
   });
-}());
+}
+
+test1();
