@@ -76,7 +76,7 @@ const Vector = (function () {
         get: () => val.x,
         set: (num) => {
           val.x = forcenum(num);
-          adjust();
+          // adjust(); // or wait for the y shoe to drop
         },
       },
       y: {

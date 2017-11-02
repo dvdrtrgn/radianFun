@@ -7,7 +7,7 @@ const Runner = (function () {
     const I = this;
     let run;
     let loop;
-    let start;
+    let start = 0;
     let frames = 0;
     let elapsed = 0;
 
@@ -24,6 +24,7 @@ const Runner = (function () {
         W.removeEventListener('click', I.stop);
         W.addEventListener('click', I.go);
         loop = function () {
+          I.time.elapsed; // force update
           C.log({
             elapsed, frames,
             fps: frames / (elapsed / 1000),
