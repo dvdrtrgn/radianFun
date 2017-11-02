@@ -17,6 +17,7 @@ const Vector = (function () {
   const forcenum = (n, m) => Number(n) || m || 0;
   const hypot = (x, y) => danger(Math.sqrt(x * x + y * y));
   const simp = (n, m) => parseFloat(n.toFixed(m || 7));
+  const rando = (mag = 1) => mag * (Math.random() * 2 - 1);
   const deg2rad = (deg) => deg * Math.PI / 180.0;
   // const rad2deg = (rad) => rad / Math.PI * 180.0;
 
@@ -50,20 +51,23 @@ const Vector = (function () {
   function VEC(X, Y) {
     let I = this;
     let val = {
+      mg: 0,
       x: 0,
       y: 0,
-      get mag() {
-        return I.mag;
-      },
     };
+
     Object.defineProperties(I, {
       x: {
         get: () => val.x,
-        set: (x) => val.x = forcenum(x),
+        set: (num) => {
+          val.x = forcenum(num);
+        },
       },
       y: {
         get: () => val.y,
-        set: (y) => val.y = forcenum(y),
+        set: (num) => {
+          val.y = forcenum(num);
+        },
       },
       mag: {
         get: () => hypot(I.x, I.y),
@@ -110,6 +114,10 @@ const Vector = (function () {
 
   // ----------------------------
   // STATIC
+  VEC.random = function () {
+    var tmp = new VEC(rando(), rando());
+    return tmp.norm();
+  };
   VEC.read = function (x, y) {
     return parse(x, y, new VEC);
   };
