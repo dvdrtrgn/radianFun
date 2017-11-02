@@ -15,7 +15,7 @@ const Vector = (function () {
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
   const forcenum = (n, m) => Number(n) || m || 0;
-  const hypot = (x, y) => danger(Math.sqrt(x * x + y * y));
+  const hypot = (x, y) => (x + y) ? danger(Math.sqrt(x * x + y * y)) : 0;
   const simp = (n, m) => parseFloat(n.toFixed(m || 7));
   const rando = (mag = 1) => mag * (Math.random() * 2 - 1);
   const deg2rad = (deg) => deg * Math.PI / 180.0;
@@ -56,24 +56,35 @@ const Vector = (function () {
       y: 0,
     };
 
+    function adjust(dmag) {
+      if (dmag) {
+        val.x /= dmag;
+        val.y /= dmag;
+        val.mg /= dmag;
+      } else {
+        val.mg = hypot(val.x, val.y);
+      }
+    }
+
     Object.defineProperties(I, {
       x: {
         get: () => val.x,
         set: (num) => {
           val.x = forcenum(num);
+          adjust();
         },
       },
       y: {
         get: () => val.y,
         set: (num) => {
           val.y = forcenum(num);
+          adjust();
         },
       },
       mag: {
-        get: () => hypot(I.x, I.y),
-        set: (m) => {
-          let mag = I.mag / forcenum(m, 1e-9);
-          I.x /= mag, I.y /= mag;
+        get: () => val.mg,
+        set: (num) => {
+          adjust(val.mg / forcenum(num, 1e-9));
         },
       },
       dump: {
