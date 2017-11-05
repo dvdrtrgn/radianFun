@@ -12,11 +12,20 @@ W.addEventListener('mousemove', function (evt) {
 function test1() {
   let loc = new Vector(SPC.w / 2, SPC.h / 2);
   let vel = new Vector();
-  vel.limit = 11;
+  let halt = 0;
 
   RNR.init(function () { // update
-    let acc = new Vector(MOU.x, MOU.y);
-    acc.sub(loc).add(Vector.random()).norm();
+    let acc = new Vector(MOU.x, MOU.y).sub(loc);
+
+    if (acc.mag < 1) {
+      let last = vel.mag | 0;
+      if (halt !== last) C.log('caught @', halt) || (halt = last);
+      else return;
+    }
+
+    vel.limit = acc.mag; // faster for far away
+    acc.mag = 3; // obedience
+    acc.add(Vector.random()); // excitement
 
     DRW.fade().circle(loc.x, loc.y, 33);
     vel.add(acc);
