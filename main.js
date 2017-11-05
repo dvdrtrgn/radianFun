@@ -8,29 +8,44 @@ const MOU = new Vector(SPC.w / 2, SPC.h / 2);
 W.addEventListener('mousemove', function (evt) {
   MOU.read(evt.offsetX, evt.offsetY);
 });
+let dead = 0;
 
-function test1() {
-  let loc = new Vector(SPC.w / 2, SPC.h / 2);
-  let vel = new Vector();
-  let halt = 0;
-
-  RNR.init(function () { // update
-    let acc = new Vector(MOU.x, MOU.y).sub(loc);
-
-    if (acc.mag < 1) {
-      let last = vel.mag | 0;
-      if (halt !== last) C.log('caught @', halt) || (halt = last);
-      else return;
+function stopped(acc, vel) {
+  if (acc.mag < 1) {
+    let rate = (vel.mag | 0);
+    if (dead !== rate) {
+      if (rate) C.log('caught @', rate);
+      dead = rate;
+      return true;
     }
+  }
+}
 
+function followMouse(loc, vel) {
+  let acc = new Vector(MOU.x, MOU.y).sub(loc);
+  if (!stopped(acc, vel)) {
     vel.limit = acc.mag; // faster for far away
     acc.mag = 3; // obedience
     acc.add(Vector.random()); // excitement
+    return acc;
+  }
+}
 
-    DRW.fade().circle(loc.x, loc.y, 33);
+function mover() {
+  let loc = new Vector(SPC.w / 2, SPC.h / 2);
+  let vel = new Vector();
+
+  RNR.init(function () {
+    let acc = followMouse(loc, vel);
+    if (!acc) return;
+
+    // UPDATE
     vel.add(acc);
     loc.add(vel);
+
+    // DISPLAY
+    DRW.fade().circle(loc.x, loc.y, 33);
   });
 }
 
-test1();
+mover();
