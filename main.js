@@ -31,6 +31,15 @@ function followMouse(loc, vel) {
   }
 }
 
+function contain(loc, vel) {
+  if (loc.x < 0 || loc.x > SPC.w) {
+    vel.x *= -1;
+  } else
+  if (loc.y < 0 || loc.y > SPC.w) {
+    vel.y *= -1;
+  }
+}
+
 function mover() {
   let loc = new Vector(SPC.w / 2, SPC.h / 2);
   let vel = new Vector();
@@ -44,6 +53,7 @@ function mover() {
     loc.add(vel);
 
     // DISPLAY
+    contain(loc, vel);
     DRW.fade().circle(loc.x, loc.y, 33);
   });
 }
