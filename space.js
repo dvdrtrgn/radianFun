@@ -26,6 +26,12 @@ const Space = (function () {
         get: () => val.h,
         set: (h) => val.h = forceNumber(h),
       },
+      x: {
+        get: () => val.w / 2,
+      },
+      y: {
+        get: () => val.h / 2,
+      },
       valueOf: {
         value: () => [this.w, this.h],
       },
