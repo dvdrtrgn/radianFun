@@ -6,10 +6,11 @@ const Vector = (function () {
 ?   div()   // scale down x and y
   */
   const C = window.console;
+  const MIN = 1e-33;
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
   const forcenum = (n, m) => Number(n) || m || 0;
-  const hypot = (x, y) => (x || y) ? danger(Math.sqrt(x * x + y * y)) : 0;
+  const hypot = (x, y) => (x || y) ? Math.sqrt(x * x + y * y) : MIN;
   const simp = (n, m) => parseFloat(n.toFixed(m || 7));
   const rando = (mag = 1) => mag * (Math.random() * 2 - 1);
   const deg2rad = (deg) => deg * Math.PI / 180.0;
@@ -17,10 +18,6 @@ const Vector = (function () {
 
   // ----------------------------
   // HELP
-  function danger(n) {
-    if (Math.abs(n) < 1e-17) C.warn(n, 'is too small');
-    return n;
-  }
 
   function parse(x, y, obj) {
     if (typeof x === 'object') {
@@ -68,7 +65,7 @@ const Vector = (function () {
       limit: {
         get: () => val.lm,
         set: (num) => {
-          val.lm = forcenum(num, 1e-9);
+          val.lm = forcenum(num, MIN);
           adjust();
         },
       },
@@ -89,7 +86,7 @@ const Vector = (function () {
       mag: {
         get: () => val.mg,
         set: (num) => {
-          adjust(val.mg / forcenum(num, 1e-9));
+          adjust(val.mg / forcenum(num, MIN));
         },
       },
       dump: {
