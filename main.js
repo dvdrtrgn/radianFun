@@ -26,17 +26,23 @@ function followMouse(mover) {
   }
 }
 
-function mover() {
-  let mover = new Mover();
+function run() {
+  let mover1 = new Mover('Good girl');
+  let mover2 = new Mover('Bad boy');
 
   RNR.init(function () {
-    let acc = forceGen(mover);
-    if (!acc) return;
+    let acc1 = forceGen(mover1);
+    let acc2 = forceGen(mover2);
+    if (!acc1 || !acc2) return;
 
-    acc.add(followMouse(mover));
-    acc.add(Vector.random()); // excitement
-    mover.contain().update(acc);
+    acc1.add(followMouse(mover1));
+    acc1.add(Vector.random()); // excitement
+    mover1.contain().update(acc1);
+
+    acc2.add(followMouse(mover2));
+    acc2.add(Vector.random()); // excitement
+    mover2.wrap().update(acc2);
   });
 }
 
-window.setTimeout(mover, 99);
+window.setTimeout(run, 99);

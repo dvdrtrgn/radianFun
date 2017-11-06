@@ -29,7 +29,7 @@ const Mover = (function () {
   }
 
   // ----------------------------
-  function MVR() {
+  function MVR(nom) {
     const I = this;
     let loc = new Vector(SPC.x, SPC.y);
     let vel = new Vector();
@@ -49,7 +49,7 @@ const Mover = (function () {
         let rate = (vel.mag | 0);
         if (rate > 1) return;
         if (rate !== dead) {
-          if (rate) C.log('stopped');
+          if (nom && !rate) C.log('stopped', nom);
           dead = rate;
           return true;
         }
@@ -60,6 +60,7 @@ const Mover = (function () {
       },
       loc,
       vel,
+      nom,
     });
   }
 
