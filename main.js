@@ -13,36 +13,28 @@ const _watchMouse = function (evt) {
 // etc
 W.addEventListener('mousemove', _watchMouse);
 
-function forceGen(mover) {
-  let acc = new Vector(0, 1);
-  if (!mover.stopped()) return acc;
-}
-
 function followMouse(mover) {
   let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
-  if (!mover.stopped()) {
-    mover.vel.limit = acc.mag; // faster for far away
-    acc.mag = 3; // obedience
-    return acc;
-  }
+  mover.vel.limit = acc.mag; // faster for far away
+  acc.mag = 3; // obedience
+  return acc;
 }
 
 function run() {
-  let mover1 = new Mover('Good girl', 'pink', 33);
-  let mover2 = new Mover('Bad boy', 'lightblue', 26);
+  let male = new Mover('Bad boy', 'lightblue', 26);
+  let female = new Mover('Good girl', 'pink', 33);
+  female.cf.wrap = false;
 
   LOOP.init(function () {
-    let acc1 = forceGen(mover1);
-    let acc2 = forceGen(mover2);
-    if (!acc1 || !acc2) return;
     PAINT.clear();
-    acc1.add(followMouse(mover1));
-    acc1.add(Vector.random()); // excitement
-    mover1.contain().update(acc1);
-
-    acc2.add(followMouse(mover2));
-    acc2.add(Vector.random()); // excitement
-    mover2.wrap().update(acc2);
+    female.addForce(new Vector(0, 2)) // weight
+      .addForce(followMouse(female))
+      .addForce(Vector.random()) // excitement
+      .update();
+    male.addForce(new Vector(0, 1)) // weight
+      .addForce(followMouse(male))
+      .addForce(Vector.random()) // excitement
+      .update();
   });
 }
 

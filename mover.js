@@ -27,12 +27,22 @@ const Mover = (function () {
     if (loc.y < 0) loc.y = AREA.h;
   }
 
+  function stopped(vel, cf) {
+    let rate = (vel.mag | 0);
+    if (rate > 1) return;
+    if (rate !== cf.dead) {
+      if (cf.name && !rate) C.log('stopped', cf.name);
+      cf.dead = rate;
+      return true;
+    }
+  }
+
   // ----------------------------
   function MVR(nom, col, siz) {
     const I = this;
+    let acc = new Vector();
     let loc = new Vector(AREA.x, AREA.y);
     let vel = new Vector();
-    let dead = 0;
     let cf = {
       name: nom,
       color: col || 'black',
@@ -42,27 +52,19 @@ const Mover = (function () {
     };
 
     Object.assign(I, {
-      update: function (acc) {
+      addForce: function (force) {
+        acc.add(force);
+        return I;
+      },
+      update: function () {
         vel.add(acc);
         loc.add(vel);
+        cf.wrap ? wrap(loc) : contain(loc, vel);
+        acc.mag = 0;
         display(loc, cf);
       },
-      contain: function () {
-        contain(loc, vel);
-        return I;
-      },
       stopped: function () {
-        let rate = (vel.mag | 0);
-        if (rate > 1) return;
-        if (rate !== dead) {
-          if (nom && !rate) C.log('stopped', nom);
-          dead = rate;
-          return true;
-        }
-      },
-      wrap: function () {
-        wrap(loc);
-        return I;
+        return stopped(vel, cf);
       },
       cf,
       loc,
