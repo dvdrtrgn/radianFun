@@ -1,11 +1,12 @@
-/*global Mover, Runner, Space, Vector, */
+/*global Draw, Mover, Runner, Space, Vector, */
 const W = window;
 const C = W.console;
-const SPC = new Space(W.innerWidth, W.innerHeight);
-const MOU = new Vector(SPC.x, SPC.y);
-const RNR = new Runner();
+const AREA = new Space(W.innerWidth, W.innerHeight);
+const LOOP = new Runner();
+const MOUSE = new Vector(AREA.x, AREA.y);
+const PAINT = new Draw('Test', AREA);
 const _watchMouse = function (evt) {
-  MOU.read(evt.offsetX, evt.offsetY);
+  MOUSE.read(evt.offsetX, evt.offsetY);
 };
 
 // ---------
@@ -18,7 +19,7 @@ function forceGen(mover) {
 }
 
 function followMouse(mover) {
-  let acc = new Vector(MOU.x, MOU.y).sub(mover.loc);
+  let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
   if (!mover.stopped()) {
     mover.vel.limit = acc.mag; // faster for far away
     acc.mag = 3; // obedience
@@ -30,7 +31,7 @@ function run() {
   let mover1 = new Mover('Good girl');
   let mover2 = new Mover('Bad boy');
 
-  RNR.init(function () {
+  LOOP.init(function () {
     let acc1 = forceGen(mover1);
     let acc2 = forceGen(mover2);
     if (!acc1 || !acc2) return;
