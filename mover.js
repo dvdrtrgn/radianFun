@@ -16,8 +16,8 @@ const Mover = (function () {
     }
   }
 
-  function display(loc) {
-    PAINT.fade().circle(loc.x, loc.y, 33);
+  function display(loc, cf) {
+    PAINT.circle(loc.x, loc.y, cf.size, cf.color);
   }
 
   function wrap(loc) {
@@ -28,17 +28,24 @@ const Mover = (function () {
   }
 
   // ----------------------------
-  function MVR(nom) {
+  function MVR(nom, col, siz) {
     const I = this;
     let loc = new Vector(AREA.x, AREA.y);
     let vel = new Vector();
     let dead = 0;
+    let cf = {
+      name: nom,
+      color: col || 'black',
+      dead: 0,
+      size: siz || 10,
+      wrap: true,
+    };
 
     Object.assign(I, {
       update: function (acc) {
         vel.add(acc);
         loc.add(vel);
-        display(loc);
+        display(loc, cf);
       },
       contain: function () {
         contain(loc, vel);
@@ -57,6 +64,7 @@ const Mover = (function () {
         wrap(loc);
         return I;
       },
+      cf,
       loc,
       vel,
       nom,

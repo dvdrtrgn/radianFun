@@ -11,8 +11,9 @@ const Draw = (function () {
     can.width = grid.w, can.height = grid.h;
 
     Object.assign(this, {
-      circle: function (x, y, radius) {
-        ctx.fillStyle = dark;
+      circle: function (x, y, radius, color) {
+        ctx.fillStyle = color || dark;
+        ctx.strokeStyle = 'white';
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
         ctx.stroke();
