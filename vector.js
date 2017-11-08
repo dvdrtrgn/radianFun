@@ -37,6 +37,16 @@ const Vector = (function () {
     return obj;
   }
 
+  function mult(num, obj) {
+    obj.mag *= num;
+    return obj;
+  }
+
+  function div(num, obj) {
+    obj.mag /= num;
+    return obj;
+  }
+
   // ----------------------------
   // CSTR
   function VEC(X, Y) {
@@ -119,6 +129,12 @@ const Vector = (function () {
       this.x -= vect.x, this.y -= vect.y;
       return this;
     },
+    mult: function (vect) {
+      return mult(vect, this);
+    },
+    div: function (vect) {
+      return div(vect, this);
+    },
     norm: function () {
       this.mag = 1;
       return this;
@@ -128,7 +144,7 @@ const Vector = (function () {
   // ----------------------------
   // STATIC
   VEC.random = function () {
-    var tmp = new VEC(rando(), rando());
+    let tmp = new VEC(rando(), rando());
     return tmp.norm();
   };
   VEC.read = function (x, y) {
@@ -136,6 +152,12 @@ const Vector = (function () {
   };
   VEC.offset = function (dist, deg) {
     return vector(dist, deg, new VEC);
+  };
+  VEC.mult = function (vect, num) {
+    return mult(num, new VEC(vect));
+  };
+  VEC.div = function (vect, num) {
+    return div(num, new VEC(vect));
   };
 
   return VEC;
