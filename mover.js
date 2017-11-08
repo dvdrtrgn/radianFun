@@ -38,22 +38,23 @@ const Mover = (function () {
   }
 
   // ----------------------------
-  function MVR(nom, col, siz) {
+  function MVR(name, mass = 1, size = 10) {
     const I = this;
     let acc = new Vector();
     let loc = new Vector(AREA.x, AREA.y);
     let vel = new Vector();
     let cf = {
-      name: nom,
-      color: col || 'black',
+      color: 'black',
       dead: 0,
-      size: siz || 10,
       wrap: false,
+      name,
+      mass,
+      size,
     };
 
     Object.assign(I, {
       addForce: function (force) {
-        if (force) acc.add(force);
+        if (force) acc.add(Vector.div(force, I.mass));
         return I;
       },
       update: function () {
@@ -69,7 +70,8 @@ const Mover = (function () {
       cf,
       loc,
       vel,
-      nom,
+      name,
+      mass,
     });
   }
 

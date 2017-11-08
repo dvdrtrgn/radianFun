@@ -21,15 +21,28 @@ function followMouse(mover) {
 }
 
 function run() {
+  const wind = new Vector(0.01, 0);
+  const gravity = new Vector(0, 1);
   let movers = Array(5).fill(0);
-  movers = movers.map((e, i) => new Mover(i, color(), rando(10) + 10));
-  movers.forEach(function (m) {
-    m.addForce(new Vector((rando(100) - 50) / 10, 0));
+
+  movers = movers.map(function (e, i) {
+    let size = rando(9) + 1;
+    let mass = size / 10;
+    let radius = size + 10;
+    let m = new Mover(i, mass, radius);
+
+    m.x = mass * AREA.w;
+    m.cf.color = color();
+    m.addForce(new Vector(rando(10) - 5, rando(10) - 5));
+
+    return m;
   });
+
   LOOP.init(function () {
     PAINT.clear();
     movers.forEach(function (m) {
-      m.addForce(new Vector(0, 2)) // weight
+      m.addForce(Vector.mult(gravity, m.mass)) // weight
+        .addForce(wind)
         // .addForce(followMouse(m))
         // .addForce(Vector.random()) // excitement
         .update();
