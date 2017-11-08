@@ -1,38 +1,41 @@
-/*global Angle, Draw, Point, Runner, Space, */
-var W = window;
-var C = W.console;
-let R;
+/*global Draw, Mover, Runner, Space, Vector, */
+const W = window;
+const C = W.console;
+const AREA = new Space(W.innerWidth, W.innerHeight);
+const LOOP = new Runner();
+const MOUSE = new Vector(AREA.x, AREA.y);
+const PAINT = new Draw('Test', AREA);
+const _watchMouse = function (evt) {
+  MOUSE.read(evt.offsetX, evt.offsetY);
+};
 
-function test1() {
-  R = new Runner();
-  let arc = new Angle();
-  let pos = new Point();
-  let grid = new Space(W.innerWidth, W.innerHeight);
-  let draw = new Draw('Test', grid);
-  let Cf = {
-    radius: 10,
-    bounce: 30,
-    vscale: 20,
-    offset: 100,
-    scan: function () {
-      return grid.indexPosition(R.time.elapsed, true);
-    },
-  };
+// ---------
+// etc
+W.addEventListener('mousemove', _watchMouse);
 
-  R.init(function () { // draw
-    let time = R.time.elapsed;
-    let scan = Cf.scan();
-    let size = Cf.radius + scan.y; // grow
+function followMouse(mover) {
+  let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
+  mover.vel.limit = acc.mag; // faster for far away
+  acc.mag = 3; // obedience
+  return acc;
+}
 
-    arc.deg = time;
-    pos.read(scan);
-    pos.y *= Cf.vscale;
-    pos.y += Cf.offset;
-    pos.translate(Cf.bounce, arc);
+function run() {
+  let male = new Mover('Bad boy', 'lightblue', 26);
+  let female = new Mover('Good girl', 'pink', 33);
+  female.cf.wrap = false;
 
-    draw.fade(); // do not clear
-    draw.circle(pos.x, pos.y, size);
+  LOOP.init(function () {
+    PAINT.clear();
+    female.addForce(new Vector(0, 2)) // weight
+      .addForce(followMouse(female))
+      .addForce(Vector.random()) // excitement
+      .update();
+    male.addForce(new Vector(0, 1)) // weight
+      .addForce(followMouse(male))
+      .addForce(Vector.random()) // excitement
+      .update();
   });
 }
 
-test1();
+window.setTimeout(run, 99);

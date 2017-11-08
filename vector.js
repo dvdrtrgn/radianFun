@@ -1,29 +1,23 @@
 const Vector = (function () {
   /*
-    x       // size x
-    y       // size y
-    mag     // get hypotenuse size
 ?   deg     // angle in degrees
 ?   rad     // angle in radians
-    norm()  // divide all by hypot
-    add()   // add x and y
-    sub()   // subtract x and y
 ?   mult()  // scale up x and y
 ?   div()   // scale down x and y
   */
+  const C = window.console;
+  const MIN = 1e-33;
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
   const forcenum = (n, m) => Number(n) || m || 0;
-  const hypot = (x, y) => danger(Math.sqrt(x * x + y * y));
+  const hypot = (x, y) => (x || y) ? Math.sqrt(x * x + y * y) : MIN;
   const simp = (n, m) => parseFloat(n.toFixed(m || 7));
-  const C = window.console;
+  const rando = (mag = 1) => mag * (Math.random() * 2 - 1);
+  const deg2rad = (deg) => deg * Math.PI / 180.0;
+  // const rad2deg = (rad) => rad / Math.PI * 180.0;
 
   // ----------------------------
   // HELP
-  function danger(n) {
-    if (Math.abs(n) < 1e-17) C.warn(n, 'is too small');
-    return n;
-  }
 
   function parse(x, y, obj) {
     if (typeof x === 'object') {
@@ -36,8 +30,8 @@ const Vector = (function () {
     return obj;
   }
 
-  function vector(dist, ang, obj) {
-    let rad = ang && ang.rad ? ang.rad : forcenum(ang);
+  function vector(dist, deg, obj) {
+    let rad = deg2rad(forcenum(deg));
     obj.x += Math.cos(rad) * dist;
     obj.y += Math.sin(rad) * dist;
     return obj;
@@ -48,26 +42,51 @@ const Vector = (function () {
   function VEC(X, Y) {
     let I = this;
     let val = {
+      lm: undefined,
+      mg: 0,
       x: 0,
       y: 0,
-      get mag() {
-        return I.mag;
-      },
     };
+
+    function adjust(dmag) {
+      if (dmag) {
+        val.x /= dmag;
+        val.y /= dmag;
+        val.mg /= dmag;
+      } else {
+        val.mg = hypot(val.x, val.y);
+      }
+      if (val.mg > val.lm) {
+        I.mag = val.lm;
+      }
+    }
+
     Object.defineProperties(I, {
+      limit: {
+        get: () => val.lm,
+        set: (num) => {
+          val.lm = forcenum(num, MIN);
+          adjust();
+        },
+      },
       x: {
         get: () => val.x,
-        set: (x) => val.x = forcenum(x),
+        set: (num) => {
+          val.x = forcenum(num);
+          // adjust(); // or wait for the y shoe to drop
+        },
       },
       y: {
         get: () => val.y,
-        set: (y) => val.y = forcenum(y),
+        set: (num) => {
+          val.y = forcenum(num);
+          adjust();
+        },
       },
       mag: {
-        get: () => hypot(I.x, I.y),
-        set: (m) => {
-          let mag = I.mag / forcenum(m, 1e-9);
-          I.x /= mag, I.y /= mag;
+        get: () => val.mg,
+        set: (num) => {
+          adjust(val.mg / forcenum(num, MIN));
         },
       },
       dump: {
@@ -89,8 +108,8 @@ const Vector = (function () {
     read: function (x, y) {
       return parse(x, y, this);
     },
-    offset: function (dist, ang) {
-      return vector(dist, ang, this);
+    offset: function (dist, deg) {
+      return vector(dist, deg, this);
     },
     add: function (vect) {
       this.x += vect.x, this.y += vect.y;
@@ -108,11 +127,15 @@ const Vector = (function () {
 
   // ----------------------------
   // STATIC
+  VEC.random = function () {
+    var tmp = new VEC(rando(), rando());
+    return tmp.norm();
+  };
   VEC.read = function (x, y) {
     return parse(x, y, new VEC);
   };
-  VEC.offset = function (dist, ang) {
-    return vector(dist, ang, new VEC);
+  VEC.offset = function (dist, deg) {
+    return vector(dist, deg, new VEC);
   };
 
   return VEC;
