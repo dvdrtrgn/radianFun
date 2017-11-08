@@ -8,7 +8,7 @@ const Mover = (function () {
     let y = loc.y;
     if (x < 0 || x > AREA.w) {
       loc.x = x < 0 ? 0 : AREA.w;
-      vel.x *= -0.9;
+      vel.x *= -0.5;
     }
     if (y < 0 || y > AREA.h) {
       loc.y = y < 0 ? 0 : AREA.h;
@@ -48,12 +48,12 @@ const Mover = (function () {
       color: col || 'black',
       dead: 0,
       size: siz || 10,
-      wrap: true,
+      wrap: false,
     };
 
     Object.assign(I, {
       addForce: function (force) {
-        acc.add(force);
+        if (force) acc.add(force);
         return I;
       },
       update: function () {
