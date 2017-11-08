@@ -1,17 +1,10 @@
-/*global CSS_COLORS, Draw, Mover, Runner, Space, Vector, */
-const W = window;
-const C = W.console;
-const AREA = new Space(W.innerWidth, W.innerHeight);
+/*global W, C, MOUSE, AREA, PAINT, CSS_COLORS, Mover, Runner Vector, */
 const LOOP = new Runner();
-const MOUSE = new Vector(AREA.x, AREA.y);
-const PAINT = new Draw('Test', AREA);
-const _watchMouse = (evt) => MOUSE.read(evt.offsetX, evt.offsetY);
 const rando = (top = 9) => Math.random() * (1 + top) | 0;
 const color = () => CSS_COLORS[rando(CSS_COLORS.length)];
 
 // ---------
 // etc
-W.addEventListener('mousemove', _watchMouse);
 
 function followMouse(mover) {
   let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
@@ -26,7 +19,7 @@ function run() {
   let movers = Array(5).fill(0);
 
   movers = movers.map(function (e, i) {
-    let size = rando(9) + 1;
+    let size = rando(19) + 1;
     let mass = size / 10;
     let radius = size + 10;
     let m = new Mover(i, mass, radius);
@@ -51,4 +44,4 @@ function run() {
   C.log(movers);
 }
 
-window.setTimeout(run, 99);
+W.setTimeout(run, 99);
