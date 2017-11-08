@@ -1,4 +1,4 @@
-/*global Draw, Mover, Runner, Space, Vector, */
+/*global CSS_COLORS, Draw, Mover, Runner, Space, Vector, */
 const W = window;
 const C = W.console;
 const AREA = new Space(W.innerWidth, W.innerHeight);
@@ -8,6 +8,8 @@ const PAINT = new Draw('Test', AREA);
 const _watchMouse = function (evt) {
   MOUSE.read(evt.offsetX, evt.offsetY);
 };
+const rando = (top = 9) => Math.random() * (1 + top) | 0;
+const color = () => CSS_COLORS[rando(CSS_COLORS.length)];
 
 // ---------
 // etc
