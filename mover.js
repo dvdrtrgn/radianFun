@@ -7,16 +7,17 @@ const Mover = (function () {
     let x = loc.x;
     let y = loc.y;
     if (x < 0 || x > AREA.w) {
-      loc.x = x < 0 ? 0 : AREA.w;
-      vel.x *= -0.5;
+      loc.x = x < 0 ? (-x / 2) : AREA.w - (x - AREA.w) / 2;
+      vel.x *= -1;
     }
     if (y < 0 || y > AREA.h) {
-      loc.y = y < 0 ? 0 : AREA.h;
-      vel.y *= -0.9;
+      loc.y = y < 0 ? (-y / 2) : AREA.h - (y - AREA.h) / 2;
+      vel.y *= -1;
     }
   }
 
   function display(loc, cf) {
+    PAINT.ctx.globalAlpha = 0.1;
     PAINT.circle(loc.x, loc.y, cf.size, cf.color);
   }
 
@@ -61,7 +62,7 @@ const Mover = (function () {
         vel.add(acc);
         loc.add(vel);
         cf.wrap ? wrap(loc) : contain(loc, vel);
-        acc.mag = 0;
+        acc.mult(0);
         display(loc, cf);
       },
       stopped: function () {

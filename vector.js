@@ -2,8 +2,6 @@ const Vector = (function () {
   /*
 ?   deg     // angle in degrees
 ?   rad     // angle in radians
-?   mult()  // scale up x and y
-?   div()   // scale down x and y
   */
   const C = window.console;
   const MIN = 1e-33;
@@ -83,7 +81,7 @@ const Vector = (function () {
         get: () => val.x,
         set: (num) => {
           val.x = forcenum(num);
-          // adjust(); // or wait for the y shoe to drop
+          adjust(); // or wait for the y shoe to drop
         },
       },
       y: {

@@ -28,6 +28,8 @@ const Draw = (function () {
         ctx.fillRect(0, 0, can.width, can.height);
         return this;
       },
+      can,
+      ctx,
     });
   }
 

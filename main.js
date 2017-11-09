@@ -7,12 +7,12 @@ const rando = (top = 9) => Math.random() * (1 + top) | 0;
 // ---------
 // etc
 
-function followMouse(mover) {
-  let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
-  mover.vel.limit = acc.mag; // faster for far away
-  acc.mag = 3; // obedience
-  return acc;
-}
+// function followMouse(mover) {
+//   let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
+//   mover.vel.limit = acc.mag; // faster for far away
+//   acc.mag = 3; // obedience
+//   return acc;
+// }
 
 function run() {
   const wind = new Vector(0.01, 0);
@@ -24,11 +24,10 @@ function run() {
     let size = rando(19) + 1;
     let mass = size / 10;
     let radius = size + 10;
-    let m = new Mover(name, mass, radius);
+    let m = new Mover(name, mass, radius * 3);
 
-    m.x = mass * AREA.w;
     m.cf.color = name;
-    m.addForce(new Vector(rando(10) - 5, rando(10) - 5));
+    m.addForce(new Vector(rando(10) - 5, -rando(10)));
 
     return m;
   });
@@ -37,10 +36,10 @@ function run() {
   movers.sort((a, b) => a.mass < b.mass);
 
   LOOP.init(function () {
-    PAINT.clear();
+    // PAINT.clear();
     movers.forEach(function (m) {
       m.addForce(Vector.mult(gravity, m.mass)) // weight
-        .addForce(wind)
+        // .addForce(wind)
         // .addForce(followMouse(m))
         // .addForce(Vector.random()) // excitement
         .update();
