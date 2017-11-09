@@ -1,8 +1,6 @@
-const Runner = (function () {
-  const W = window;
-  const C = W.console;
+import {W, C} from './_globs.js';
 
-  // ----------------------------
+const Runner = (function () {
   function RNR() {
     const I = this;
     let run;
@@ -51,4 +49,4 @@ const Runner = (function () {
   return RNR;
 }());
 
-new Runner;
+export {Runner};

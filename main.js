@@ -1,6 +1,8 @@
-/*global W, C, MOUSE, AREA, CSS_COLORS, Draw, Mover, Runner Vector, */
-const LOOP = new Runner();
-const PAINT = new Draw('Test', AREA);
+import {CSS_COLORS} from './colors.js';
+import {W, C, LOOP} from './_globs.js';
+import {Mover} from './mover.js';
+import {Vector} from './vector.js';
+
 const color = () => CSS_COLORS[rando(CSS_COLORS.length - 1)];
 const rando = (top = 9) => Math.random() * (1 + top) | 0;
 
@@ -15,7 +17,7 @@ const rando = (top = 9) => Math.random() * (1 + top) | 0;
 // }
 
 function run() {
-  const wind = new Vector(0.01, 0);
+  // const wind = new Vector(0.01, 0);
   const gravity = new Vector(0, 1);
   let movers = Array(5).fill(0);
 
@@ -48,4 +50,4 @@ function run() {
   C.log(movers);
 }
 
-W.setTimeout(run, 99);
+W.setTimeout(run, 999);

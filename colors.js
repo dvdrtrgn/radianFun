@@ -30,4 +30,5 @@ var CSS_COLORS = [
 ];
 
 CSS_COLORS = CSS_COLORS.filter(x => !~x.indexOf('z'));
-CSS_COLORS;
+
+export {CSS_COLORS};

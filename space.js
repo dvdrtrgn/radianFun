@@ -61,4 +61,4 @@ const Space = (function () {
   return SPC;
 }());
 
-new Space;
+export {Space};

@@ -1,9 +1,10 @@
+import {W, C} from './_globs.js';
+
 const Vector = (function () {
   /*
 ?   deg     // angle in degrees
 ?   rad     // angle in radians
   */
-  const C = window.console;
   const MIN = 1e-33;
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
@@ -161,4 +162,4 @@ const Vector = (function () {
   return VEC;
 }());
 
-new Vector;
+export {Vector};

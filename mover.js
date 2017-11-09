@@ -1,4 +1,6 @@
-/*global AREA, PAINT, Vector, */
+import {AREA, PAINT} from './_globs.js';
+import {Vector} from './vector.js';
+
 const Mover = (function () {
   const W = window;
   const C = W.console;
@@ -79,4 +81,4 @@ const Mover = (function () {
   return MVR;
 }());
 
-new Mover;
+export {Mover};
