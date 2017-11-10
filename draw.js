@@ -36,4 +36,4 @@ const Draw = (function () {
   return DRW;
 }());
 
-export {Draw};
+export default Draw;

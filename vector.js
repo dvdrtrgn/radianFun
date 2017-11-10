@@ -162,4 +162,4 @@ const Vector = (function () {
   return VEC;
 }());
 
-export {Vector};
+export default Vector;

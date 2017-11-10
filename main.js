@@ -1,10 +1,7 @@
-import {CSS_COLORS} from './colors.js';
-import {W, C, LOOP} from './_globs.js';
-import {Mover} from './mover.js';
-import {Vector} from './vector.js';
+import {W, C, LOOP, Rando} from './_globs.js';
 
-const color = () => CSS_COLORS[rando(CSS_COLORS.length - 1)];
-const rando = (top = 9) => Math.random() * (1 + top) | 0;
+import Mover from './mover.js';
+import Vector from './vector.js';
 
 // ---------
 // etc
@@ -22,14 +19,14 @@ function run() {
   let movers = Array(5).fill(0);
 
   movers = movers.map(function () {
-    let name = color();
-    let size = rando(19) + 1;
+    let name = Rando.color();
+    let size = Rando.whole(19) + 1;
     let mass = size / 10;
     let radius = size + 10;
     let m = new Mover(name, mass, radius * 3);
 
     m.cf.color = name;
-    m.addForce(new Vector(rando(10) - 5, -rando(10)));
+    m.addForce(new Vector(Rando.whole(10) - 5, -Rando.whole(10)));
 
     return m;
   });

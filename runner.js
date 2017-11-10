@@ -49,4 +49,4 @@ const Runner = (function () {
   return RNR;
 }());
 
-export {Runner};
+export default Runner;

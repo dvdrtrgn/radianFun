@@ -1,5 +1,5 @@
 import {AREA, PAINT} from './_globs.js';
-import {Vector} from './vector.js';
+import Vector from './vector.js';
 
 const Mover = (function () {
   const W = window;
@@ -81,4 +81,4 @@ const Mover = (function () {
   return MVR;
 }());
 
-export {Mover};
+export default Mover;

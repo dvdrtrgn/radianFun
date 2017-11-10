@@ -61,4 +61,4 @@ const Space = (function () {
   return SPC;
 }());
 
-export {Space};
+export default Space;
