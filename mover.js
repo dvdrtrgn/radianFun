@@ -9,11 +9,11 @@ const Mover = (function () {
     let x = loc.x;
     let y = loc.y;
     if (x < 0 || x > AREA.w) {
-      loc.x = x < 0 ? (-x / 2) : AREA.w - (x - AREA.w) / 2;
+      loc.x = x < 0 ? 0 : AREA.w;
       vel.x *= -1;
     }
     if (y < 0 || y > AREA.h) {
-      loc.y = y < 0 ? (-y / 2) : AREA.h - (y - AREA.h) / 2;
+      loc.y = y < 0 ? 0 : AREA.h;
       vel.y *= -1;
     }
   }
@@ -41,10 +41,11 @@ const Mover = (function () {
   }
 
   // ----------------------------
+  // CSTR
   function MVR(name, mass = 1, size = 10) {
     const I = this;
     let acc = new Vector();
-    let loc = new Vector(AREA.x, AREA.y);
+    let loc = new Vector(AREA.x, 0);
     let vel = new Vector();
     let cf = {
       color: 'black',

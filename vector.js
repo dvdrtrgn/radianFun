@@ -5,7 +5,7 @@ const Vector = (function () {
 ?   deg     // angle in degrees
 ?   rad     // angle in radians
   */
-  const MIN = 1e-33;
+  const MIN = 1e-66;
   const isvoid = (n) => typeof n === 'undefined';
   const isdef = (n) => !isvoid(n);
   const forcenum = (n, m) => Number(n) || m || 0;

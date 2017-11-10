@@ -10,11 +10,22 @@ const AREA = new Space(W.innerWidth, W.innerHeight);
 const MOUSE = new Vector(AREA.x, AREA.y);
 const LOOP = new Runner();
 const PAINT = new Draw('Test', AREA);
+
+// ---------
+// MOUSE
+
+function followMouse(mover) {
+  let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
+  mover.vel.limit = acc.mag; // faster for far away
+  acc.mag = 3; // obedience
+  return acc;
+}
+
 const _watchMouse = (evt) => MOUSE.read(evt.offsetX, evt.offsetY);
+W.addEventListener('mousemove', _watchMouse);
 
 // ---------
 // etc
-W.addEventListener('mousemove', _watchMouse);
 
 const Rando = {
   color: () => COLORS[Rando.whole(COLORS.length - 1)],
@@ -26,4 +37,5 @@ export {
   W, C,
   AREA, MOUSE, LOOP, PAINT,
   Rando,
+  followMouse,
 };

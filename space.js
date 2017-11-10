@@ -2,6 +2,7 @@ const Space = (function () {
   const forceNumber = (x) => Number(x) || 0;
 
   // ----------------------------
+  // CSTR
   function SPC(W, H) {
     if (typeof W === 'object') {
       if (W.length === 2) {

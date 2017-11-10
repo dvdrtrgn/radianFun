@@ -3,6 +3,7 @@ const Draw = (function () {
   let mist = 'rgba(128, 128, 128, 0.2)';
 
   // ----------------------------
+  // CSTR
   function DRW(id, grid) {
     if (!id) return;
     let can = document.getElementById(id);

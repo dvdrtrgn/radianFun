@@ -1,6 +1,9 @@
 import {W, C} from './_globs.js';
 
 const Runner = (function () {
+
+  // ----------------------------
+  // CSTR
   function RNR() {
     const I = this;
     let run;
