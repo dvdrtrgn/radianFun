@@ -2,27 +2,12 @@ import COLORS from './colors.js';
 import Draw from './draw.js';
 import Looper from './looper.js';
 import Space from './space.js';
-import Vector from './vector.js';
 
 const W = window;
 const C = W.console;
 const AREA = new Space(W.innerWidth, W.innerHeight);
-const MOUSE = new Vector(AREA.x, AREA.y);
 const LOOP = new Looper();
 const PAINT = new Draw('Test', AREA);
-
-// ---------
-// MOUSE
-
-function followMouse(mover) {
-  let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
-  mover.vel.limit = acc.mag; // faster for far away
-  acc.mag = 3; // obedience
-  return acc;
-}
-
-const _watchMouse = (evt) => MOUSE.read(evt.offsetX, evt.offsetY);
-W.addEventListener('mousemove', _watchMouse);
 
 // ---------
 // etc
@@ -34,8 +19,6 @@ const Rando = {
 };
 
 export {
-  W, C,
-  AREA, MOUSE, LOOP, PAINT,
+  W, C, AREA, LOOP, PAINT,
   Rando,
-  followMouse,
 };

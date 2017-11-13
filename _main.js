@@ -1,4 +1,5 @@
 import {W, C, LOOP, PAINT, Rando} from './_globs.js';
+import MOUSE from './_mouse.js';
 
 import Mover from './mover.js';
 import Vector from './vector.js';
@@ -31,7 +32,7 @@ function run() {
     movers.forEach(function (m) {
       m.addForce(Vector.mult(gravity, m.mass)) // weight
         // .addForce(wind)
-        // .addForce(followMouse(m))
+        // .addForce(MOUSE.follow(m))
         // .addForce(Vector.random().div(5)) // excitement
         .update();
     });
@@ -44,4 +45,4 @@ run();
 // ----------------------------
 // EXPOSE
 
-Object.assign(W, { W, C, LOOP, Rando, run, Vector, Mover});
+Object.assign(W, {W, C, LOOP, MOUSE, Mover, Rando, Vector});
