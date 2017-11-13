@@ -1,6 +1,10 @@
 import {W, C, AREA, PAINT} from './_globs.js';
 import Vector from './vector.js';
 
+const constrain = (v, l, h) => v < l ? l : (v > h ? h : v);
+const random = (v) => Math.random() * v;
+let GC = 1;
+
 function contain(loc, vel) {
   let x = loc.x;
   let y = loc.y;
@@ -49,13 +53,25 @@ function calcDrag(vel, Phi, sA, dC) {
   return vN.mult(consts * v2);
 }
 
+function calcGrav(m1, m2, gC) {
+  // Fg = (gC * m1m * m2m / dir.mag^2) * dir.norm
+  gC = gC || GC; // gravitational constant
+
+  let dir = Vector.sub(m2.loc, m1.loc); // diff:distance
+  let d2 = Math.pow(dir.mag, 2); // distance squared
+
+  d2 = constrain(d2, 10, 500); // keep sanity
+
+  return dir.norm().mult(gC * m1.mass * m2.mass / d2);
+}
+
 // ----------------------------
 // CSTR
 
 function Mover(name, mass = 1, size = 10) {
   const I = this;
   let acc = new Vector();
-  let loc = new Vector(AREA.x, 0);
+  let loc = new Vector(random(AREA.w), random(AREA.h));
   let vel = new Vector();
   let cf = {
     color: 'black',
@@ -83,6 +99,9 @@ function Mover(name, mass = 1, size = 10) {
     },
     calcDrag: function () {
       return calcDrag(vel);
+    },
+    calcGrav: function (i2) {
+      return calcGrav(I, i2);
     },
     cf,
     loc,
