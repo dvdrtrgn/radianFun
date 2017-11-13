@@ -24,11 +24,12 @@ movers = movers.map(function () {
 }).sort((a, b) => a.mass < b.mass); // move bigger to back
 
 LOOP.init(function () {
-  MOUSE.down && PAINT.clear();
+  // MOUSE.down && PAINT.clear();
   movers.forEach(function (m) {
     m.addForce(Vector.mult(gravity, m.mass)) // weight
       .addForce(wind)
-      .addForce(MOUSE.over ? MOUSE.follow(m) : null)
+      .addForce(MOUSE.down ? m.calcDrag() : null)
+      .addForce(MOUSE.over && !MOUSE.down ? MOUSE.follow(m) : null)
       // .addForce(Vector.random().div(5)) // excitement
       .update();
   });

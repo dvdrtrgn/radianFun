@@ -36,6 +36,19 @@ function stopped(vel, cf) {
   }
 }
 
+function calcDrag(vel, Phi, sA, dC) {
+  // Fd = -(1/2) * Phi * v2 * sA * dC * vN
+  Phi = Phi || 1; // density
+  sA = sA || 1; // surface area
+  dC = dC || 0.001; // drag coefficient
+
+  let consts = -0.5 * Phi * sA * dC;
+  let v2 = Math.pow(vel.mag, 2);
+  let vN = vel.get().norm();
+
+  return vN.mult(consts * v2);
+}
+
 // ----------------------------
 // CSTR
 
@@ -67,6 +80,9 @@ function Mover(name, mass = 1, size = 10) {
     },
     stopped: function () {
       return stopped(vel, cf);
+    },
+    calcDrag: function () {
+      return calcDrag(vel);
     },
     cf,
     loc,
