@@ -1,9 +1,7 @@
-import {AREA, PAINT} from './_globs.js';
+import {W, C, AREA, PAINT} from './_globs.js';
 import Vector from './vector.js';
 
 const Mover = (function () {
-  const W = window;
-  const C = W.console;
 
   function contain(loc, vel) {
     let x = loc.x;

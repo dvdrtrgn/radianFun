@@ -138,6 +138,9 @@ const Vector = (function () {
       this.mag = 1;
       return this;
     },
+    get: function () {
+      return new VEC(this);
+    },
   });
 
   // ----------------------------
