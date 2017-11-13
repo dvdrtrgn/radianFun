@@ -1,6 +1,6 @@
 import {W, C} from './_globs.js';
 
-const Runner = (function () {
+const Looper = (function () {
 
   // ----------------------------
   // CSTR
@@ -11,6 +11,8 @@ const Runner = (function () {
     let start = 0;
     let frames = 0;
     let elapsed = 0;
+    let press = 'Space';
+    let trig = 'keydown';
 
     Object.assign(I, {
       time: {
@@ -21,9 +23,10 @@ const Runner = (function () {
           return elapsed = Date.now() - start;
         },
       },
-      stop: function () {
-        W.removeEventListener('click', I.stop);
-        W.addEventListener('click', I.go);
+      stop: function (evt) {
+        if (evt && evt.code !== press) return;
+        W.removeEventListener(trig, I.stop);
+        W.addEventListener(trig, I.go);
         loop = function () {
           I.time.elapsed; // force update
           C.log({
@@ -32,9 +35,10 @@ const Runner = (function () {
           });
         };
       },
-      go: function () {
-        W.removeEventListener('click', I.go);
-        W.addEventListener('click', I.stop);
+      go: function (evt) {
+        if (evt && evt.code !== press) return;
+        W.removeEventListener(trig, I.go);
+        W.addEventListener(trig, I.stop);
         start = Date.now() - elapsed; // hacky way to pause
         (loop = function () {
           run(), requestAnimationFrame(loop);
@@ -52,4 +56,4 @@ const Runner = (function () {
   return RNR;
 }());
 
-export default Runner;
+export default Looper;

@@ -1,6 +1,6 @@
 import COLORS from './colors.js';
 import Draw from './draw.js';
-import Runner from './runner.js';
+import Looper from './looper.js';
 import Space from './space.js';
 import Vector from './vector.js';
 
@@ -8,7 +8,7 @@ const W = window;
 const C = W.console;
 const AREA = new Space(W.innerWidth, W.innerHeight);
 const MOUSE = new Vector(AREA.x, AREA.y);
-const LOOP = new Runner();
+const LOOP = new Looper();
 const PAINT = new Draw('Test', AREA);
 
 // ---------
