@@ -9,7 +9,7 @@ const MOUSE = (function () {
   const followMouse = function (mover) {
     let acc = new Vector(I).sub(mover.loc);
     mover.vel.limit = acc.mag; // faster for far away
-    acc.mag = 3; // obedience
+    acc.mag = 7; // obedience
     return acc;
   };
 
