@@ -34,6 +34,16 @@ function vector(dist, deg, obj) {
   return obj;
 }
 
+function add(vect, obj) {
+  obj.x += vect.x, obj.y += vect.y;
+  return obj;
+}
+
+function sub(vect, obj) {
+  obj.x -= vect.x, obj.y -= vect.y;
+  return obj;
+}
+
 function mult(num, obj) {
   obj.mag *= num;
   return obj;
@@ -119,12 +129,10 @@ Object.assign(Vector.prototype, {
     return vector(dist, deg, this);
   },
   add: function (vect) {
-    this.x += vect.x, this.y += vect.y;
-    return this;
+    return add(vect, this);
   },
   sub: function (vect) {
-    this.x -= vect.x, this.y -= vect.y;
-    return this;
+    return sub(vect, this);
   },
   mult: function (vect) {
     return mult(vect, this);
@@ -152,6 +160,12 @@ Vector.read = function (x, y) {
 };
 Vector.offset = function (dist, deg) {
   return vector(dist, deg, new Vector);
+};
+Vector.add = function (v1, v2) {
+  return add(v2, new Vector(v1));
+};
+Vector.sub = function (v1, v2) {
+  return sub(v2, new Vector(v1));
 };
 Vector.mult = function (vect, num) {
   return mult(num, new Vector(vect));
