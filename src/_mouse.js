@@ -1,5 +1,4 @@
-import {W, C} from './_globs.js';
-import Vector from './vector.js';
+import Vector from './lib/vector.js';
 
 let over = false;
 let down = false;
@@ -30,11 +29,11 @@ const MOUSE = {
   valueOf: () => [loxy.x, loxy.y],
 };
 
-W.addEventListener('mouseover', () => over = true);
-W.addEventListener('mouseout', () => over = false);
-W.addEventListener('mousedown', () => down = true);
-W.addEventListener('mouseup', () => down = false);
-W.addEventListener('mousemove', (evt) => {
+window.addEventListener('mouseover', () => over = true);
+window.addEventListener('mouseout', () => over = false);
+window.addEventListener('mousedown', () => down = true);
+window.addEventListener('mouseup', () => down = false);
+window.addEventListener('mousemove', (evt) => {
   loxy.x = evt.offsetX;
   loxy.y = evt.offsetY;
 });

@@ -1,4 +1,3 @@
-import {W, C} from './_globs.js';
 /*
 ?   deg     // angle in degrees
 ?   rad     // angle in radians

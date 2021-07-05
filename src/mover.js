@@ -1,5 +1,5 @@
-import {W, C, AREA, PAINT} from './_globs.js';
-import Vector from './vector.js';
+import {AREA, PAINT} from './_globs.js';
+import Vector from './lib/vector.js';
 
 const constrain = (v, l, h) => v < l ? l : (v > h ? h : v);
 const random = (v) => Math.random() * v;
@@ -34,7 +34,7 @@ function stopped(vel, cf) {
   let rate = (vel.mag | 0);
   if (rate > 1) return;
   if (rate !== cf.dead) {
-    if (cf.name && !rate) C.log('stopped', cf.name);
+    if (cf.name && !rate) console.log('stopped', cf.name);
     cf.dead = rate;
     return true;
   }

@@ -1,5 +1,3 @@
-import {W, C} from './_globs.js';
-
 // ----------------------------
 // CSTR
 
@@ -24,11 +22,11 @@ function Looper() {
     },
     stop: function (evt) {
       if (evt && evt.code !== press) return;
-      W.removeEventListener(trig, I.stop);
-      W.addEventListener(trig, I.go);
+      window.removeEventListener(trig, I.stop);
+      window.addEventListener(trig, I.go);
       loop = function () {
         I.time.elapsed; // force update
-        C.log({
+        console.log({
           elapsed, frames,
           fps: frames / (elapsed / 1000),
         });
@@ -36,8 +34,8 @@ function Looper() {
     },
     go: function (evt) {
       if (evt && evt.code !== press) return;
-      W.removeEventListener(trig, I.go);
-      W.addEventListener(trig, I.stop);
+      window.removeEventListener(trig, I.go);
+      window.addEventListener(trig, I.stop);
       start = Date.now() - elapsed; // hacky way to pause
       (loop = function () {
         run(), requestAnimationFrame(loop);
@@ -47,7 +45,7 @@ function Looper() {
     },
     init: function (fn) {
       run = fn;
-      C.log(I.go());
+      console.log(I.go());
     },
   });
 }

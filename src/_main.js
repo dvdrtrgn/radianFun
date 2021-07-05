@@ -1,8 +1,8 @@
-import {W, C, LOOP, PAINT, Rando} from './_globs.js';
+import {LOOP, PAINT, Rando} from './_globs.js';
 import MOUSE from './_mouse.js';
 
 import Mover from './mover.js';
-import Vector from './vector.js';
+import Vector from './lib/vector.js';
 
 // ----------------------------
 
@@ -44,6 +44,6 @@ LOOP.init(function () {
 
 // ----------------------------
 // EXPOSE
-Object.assign(W, {W, C, LOOP, MOUSE, Mover, Rando, Vector});
+Object.assign(window, {LOOP, MOUSE, Mover, Rando, Vector});
 
-C.log(movers);
+console.log(movers);
