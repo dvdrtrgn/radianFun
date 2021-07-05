@@ -1,7 +1,7 @@
-import {AREA, PAINT} from './_globs.js';
+import { AREA, PAINT } from './_globs.js';
 import Vector from './lib/vector.js';
 
-const constrain = (v, l, h) => v < l ? l : (v > h ? h : v);
+const constrain = (v, l, h) => (v < l ? l : v > h ? h : v);
 const random = (v) => Math.random() * v;
 let GC = 1;
 
@@ -31,7 +31,7 @@ function wrap(loc) {
 }
 
 function stopped(vel, cf) {
-  let rate = (vel.mag | 0);
+  let rate = vel.mag | 0;
   if (rate > 1) return;
   if (rate !== cf.dead) {
     if (cf.name && !rate) console.log('stopped', cf.name);
@@ -62,7 +62,7 @@ function calcGrav(m1, m2, gC) {
 
   d2 = constrain(d2, 10, 500); // keep sanity
 
-  return dir.norm().mult(gC * m1.mass * m2.mass / d2);
+  return dir.norm().mult((gC * m1.mass * m2.mass) / d2);
 }
 
 // ----------------------------

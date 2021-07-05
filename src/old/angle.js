@@ -2,8 +2,8 @@ const Angle = (function () {
   const isBlank = (x) => typeof x === 'undefined';
   const isDefined = (x) => !isBlank(x);
   const forceNumber = (x) => Number(x) || 0;
-  const rad2deg = (rad) => rad / Math.PI * 180.0;
-  const deg2rad = (deg) => deg * Math.PI / 180.0;
+  const rad2deg = (rad) => (rad / Math.PI) * 180.0;
+  const deg2rad = (deg) => (deg * Math.PI) / 180.0;
 
   // ----------------------------
   function ANG(deg) {
@@ -22,7 +22,7 @@ const Angle = (function () {
         },
       },
       normalize: {
-        value: () => val = val % 360,
+        value: () => (val = val % 360),
       },
       toString: {
         value: () => `Angle: ${this.deg} deg / ${this.rad} rad`,
@@ -34,6 +34,6 @@ const Angle = (function () {
   ANG.deg2rad = deg2rad;
 
   return ANG;
-}());
+})();
 
-new Angle;
+new Angle();

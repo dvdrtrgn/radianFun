@@ -1,4 +1,4 @@
-import {LOOP, PAINT, Rando} from './_globs.js';
+import { LOOP, PAINT, Rando } from './_globs.js';
 import MOUSE from './_mouse.js';
 
 import Mover from './mover.js';
@@ -10,18 +10,20 @@ const wind = new Vector(0.5, 0);
 const gravity = new Vector(0, 1);
 let movers = Array(2).fill(0);
 
-movers = movers.map(function () {
-  let name = Rando.color();
-  let mass = Rando.whole(15) + 5;
-  let radius = mass * 5;
-  let m = new Mover(name, mass, radius);
+movers = movers
+  .map(function () {
+    let name = Rando.color();
+    let mass = Rando.whole(15) + 5;
+    let radius = mass * 5;
+    let m = new Mover(name, mass, radius);
 
-  m.cf.color = name;
-  m.cf.wrap = true;
-  m.addForce(Vector.random());
+    m.cf.color = name;
+    m.cf.wrap = true;
+    m.addForce(Vector.random());
 
-  return m;
-}).sort((a, b) => a.mass < b.mass); // move bigger to back
+    return m;
+  })
+  .sort((a, b) => a.mass < b.mass); // move bigger to back
 
 LOOP.init(function () {
   PAINT.clear();
@@ -44,6 +46,6 @@ LOOP.init(function () {
 
 // ----------------------------
 // EXPOSE
-Object.assign(window, {LOOP, MOUSE, Mover, Rando, Vector});
+Object.assign(window, { LOOP, MOUSE, Mover, Rando, Vector });
 
 console.log(movers);

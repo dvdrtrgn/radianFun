@@ -29,10 +29,10 @@ const MOUSE = {
   valueOf: () => [loxy.x, loxy.y],
 };
 
-window.addEventListener('mouseover', () => over = true);
-window.addEventListener('mouseout', () => over = false);
-window.addEventListener('mousedown', () => down = true);
-window.addEventListener('mouseup', () => down = false);
+window.addEventListener('mouseover', () => (over = true));
+window.addEventListener('mouseout', () => (over = false));
+window.addEventListener('mousedown', () => (down = true));
+window.addEventListener('mouseup', () => (down = false));
 window.addEventListener('mousemove', (evt) => {
   loxy.x = evt.offsetX;
   loxy.y = evt.offsetY;

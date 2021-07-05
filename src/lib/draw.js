@@ -9,7 +9,7 @@ function Draw(id, grid) {
   let can = document.getElementById(id);
   let ctx = can.getContext('2d');
 
-  can.width = grid.w, can.height = grid.h;
+  (can.width = grid.w), (can.height = grid.h);
 
   Object.assign(this, {
     circle: function (x, y, radius, color) {

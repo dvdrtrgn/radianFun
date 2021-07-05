@@ -6,10 +6,10 @@ const MIN = 1e-66;
 const isvoid = (n) => typeof n === 'undefined';
 const isdef = (n) => !isvoid(n);
 const forcenum = (n, m) => Number(n) || m || 0;
-const hypot = (x, y) => (x || y) ? Math.sqrt(x * x + y * y) : MIN;
+const hypot = (x, y) => (x || y ? Math.sqrt(x * x + y * y) : MIN);
 const simp = (n, m) => parseFloat(n.toFixed(m || 7));
 const rando = (mag = 1) => mag * (Math.random() * 2 - 1);
-const deg2rad = (deg) => deg * Math.PI / 180.0;
+const deg2rad = (deg) => (deg * Math.PI) / 180.0;
 // const rad2deg = (rad) => rad / Math.PI * 180.0;
 
 // ----------------------------
@@ -17,12 +17,10 @@ const deg2rad = (deg) => deg * Math.PI / 180.0;
 
 function parse(x, y, obj) {
   if (typeof x === 'object') {
-    if (x.length === 2)
-      y = x[1], x = x[0];
-    else if (isdef(x.y))
-      y = x.y, x = x.x;
+    if (x.length === 2) (y = x[1]), (x = x[0]);
+    else if (isdef(x.y)) (y = x.y), (x = x.x);
   }
-  obj.x = x, obj.y = y;
+  (obj.x = x), (obj.y = y);
   return obj;
 }
 
@@ -34,12 +32,12 @@ function vector(dist, deg, obj) {
 }
 
 function add(vect, obj) {
-  obj.x += vect.x, obj.y += vect.y;
+  (obj.x += vect.x), (obj.y += vect.y);
   return obj;
 }
 
 function sub(vect, obj) {
-  obj.x -= vect.x, obj.y -= vect.y;
+  (obj.x -= vect.x), (obj.y -= vect.y);
   return obj;
 }
 
@@ -155,10 +153,10 @@ Vector.random = function () {
   return tmp.norm();
 };
 Vector.read = function (x, y) {
-  return parse(x, y, new Vector);
+  return parse(x, y, new Vector());
 };
 Vector.offset = function (dist, deg) {
-  return vector(dist, deg, new Vector);
+  return vector(dist, deg, new Vector());
 };
 Vector.add = function (v1, v2) {
   return add(v2, new Vector(v1));

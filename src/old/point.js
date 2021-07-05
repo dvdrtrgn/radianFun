@@ -19,11 +19,11 @@ const Point = (function () {
     Object.defineProperties(this, {
       x: {
         get: () => val.x,
-        set: (x) => val.x = forceNumber(x),
+        set: (x) => (val.x = forceNumber(x)),
       },
       y: {
         get: () => val.y,
-        set: (y) => val.y = forceNumber(y),
+        set: (y) => (val.y = forceNumber(y)),
       },
       valueOf: {
         value: () => [this.x, this.y],
@@ -35,9 +35,9 @@ const Point = (function () {
         value: function (x, y) {
           if (typeof x === 'object') {
             if (x.length === 2) {
-              y = x[1], x = x[0];
+              (y = x[1]), (x = x[0]);
             } else if (isDefined(x.y)) {
-              y = x.y, x = x.x;
+              (y = x.y), (x = x.x);
             }
           }
           this.x = x;
@@ -53,10 +53,10 @@ const Point = (function () {
     this.read(X, Y);
   }
   PNT.translate = function (dist, ang) {
-    return translate(new PNT, dist, ang);
+    return translate(new PNT(), dist, ang);
   };
 
   return PNT;
-}());
+})();
 
-new Point;
+new Point();

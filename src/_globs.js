@@ -12,11 +12,8 @@ const PAINT = new Draw('Paint', AREA);
 
 const Rando = {
   color: () => COLORS[Rando.whole(COLORS.length - 1)],
-  whole: (top = 9) => Math.random() * (1 + top) | 0,
+  whole: (top = 9) => (Math.random() * (1 + top)) | 0,
   range: (lo, hi) => Math.random() * (hi - lo) + lo,
 };
 
-export {
-  AREA, LOOP, PAINT,
-  Rando,
-};
+export { AREA, LOOP, PAINT, Rando };

@@ -17,7 +17,7 @@ function Looper() {
         return start;
       },
       get elapsed() {
-        return elapsed = Date.now() - start;
+        return (elapsed = Date.now() - start);
       },
     },
     stop: function (evt) {
@@ -27,7 +27,8 @@ function Looper() {
       loop = function () {
         I.time.elapsed; // force update
         console.log({
-          elapsed, frames,
+          elapsed,
+          frames,
           fps: frames / (elapsed / 1000),
         });
       };

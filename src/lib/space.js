@@ -6,9 +6,9 @@ const forceNumber = (x) => Number(x) || 0;
 function Space(W, H) {
   if (typeof W === 'object') {
     if (W.length === 2) {
-      H = W[1], W = W[0];
+      (H = W[1]), (W = W[0]);
     } else {
-      H = W.h, W = W.w;
+      (H = W.h), (W = W.w);
     }
   }
 
@@ -21,11 +21,11 @@ function Space(W, H) {
   Object.defineProperties(this, {
     w: {
       get: () => val.w,
-      set: (w) => val.w = forceNumber(w),
+      set: (w) => (val.w = forceNumber(w)),
     },
     h: {
       get: () => val.h,
-      set: (h) => val.h = forceNumber(h),
+      set: (h) => (val.h = forceNumber(h)),
     },
     x: {
       get: () => val.w / 2,
@@ -46,7 +46,7 @@ function Space(W, H) {
 
         let x = i % this.w;
         let y = (i / this.w) | 0;
-        let rev = (alt && y % 2);
+        let rev = alt && y % 2;
 
         return {
           x: rev ? this.w - x : x,
