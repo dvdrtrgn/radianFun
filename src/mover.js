@@ -1,37 +1,34 @@
 import Vector from './lib/Vector';
-import Space from './lib/Space';
-import Draw from './lib/Draw';
-
-export const AREA = new Space(window.innerWidth, window.innerHeight);
-export const PAINT = new Draw('Test', AREA);
+import { SPACE, CANVAS } from './globs';
 
 function contain(loc, vel) {
   let x = loc.x;
   let y = loc.y;
-  if (x < 0 || x > AREA.w) {
-    loc.x = x < 0 ? 0 : AREA.w;
+  if (x < 0 || x > SPACE.w) {
+    loc.x = x < 0 ? 0 : SPACE.w;
     vel.x *= -0.9;
   }
-  if (y < 0 || y > AREA.h) {
-    loc.y = y < 0 ? 0 : AREA.h;
+  if (y < 0 || y > SPACE.h) {
+    loc.y = y < 0 ? 0 : SPACE.h;
     vel.y *= -0.9;
   }
 }
 
 function display(loc, cf) {
-  PAINT.circle(loc.x, loc.y, cf.size, cf.color);
+  CANVAS.circle(loc.x, loc.y, cf.size, cf.color);
 }
 
 function wrap(loc) {
-  if (loc.x > AREA.w) loc.x = 0;
-  if (loc.x < 0) loc.x = AREA.w;
-  if (loc.y > AREA.h) loc.y = 0;
-  if (loc.y < 0) loc.y = AREA.h;
+  if (loc.x > SPACE.w) loc.x = 0;
+  if (loc.x < 0) loc.x = SPACE.w;
+  if (loc.y > SPACE.h) loc.y = 0;
+  if (loc.y < 0) loc.y = SPACE.h;
 }
 
 function stopped(vel, cf) {
   let rate = vel.mag | 0;
   if (rate > 1) return;
+
   if (rate !== cf.dead) {
     if (cf.name && !rate) console.log('stopped', cf.name);
     cf.dead = rate;
@@ -43,7 +40,7 @@ function stopped(vel, cf) {
 function Mover(nom, col, siz) {
   const self = this;
   let acc = new Vector();
-  let loc = new Vector(AREA.x, AREA.y);
+  let loc = new Vector(SPACE.x, SPACE.y);
   let vel = new Vector();
   let cf = {
     name: nom,

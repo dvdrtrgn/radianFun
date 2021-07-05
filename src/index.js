@@ -1,9 +1,10 @@
-// import Draw from './Draw';
-// import Mover from './Mover';
-// import Runner from './Runner';
-// import Space from './Space';
-// import Vector from './Vector';
+import * as globs from './globs';
+import main from './main.js';
 
-import * as main from './main.js';
+const app = { main, ...globs };
 
-console.log({ main });
+console.log(app);
+
+main.run();
+
+window.app = app;

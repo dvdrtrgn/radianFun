@@ -1,9 +1,7 @@
-import Mover, { AREA, PAINT } from './Mover';
-import Runner from './lib/Runner';
+import { CANVAS, LOOP, MOUSE } from './globs';
+import Mover from './Mover';
 import Vector from './lib/Vector';
 
-const LOOP = new Runner();
-const MOUSE = new Vector(AREA.x, AREA.y);
 const _watchMouse = function (evt) {
   MOUSE.read(evt.offsetX, evt.offsetY);
 };
@@ -25,7 +23,7 @@ function run() {
   female.cf.wrap = false;
 
   LOOP.init(function () {
-    PAINT.clear();
+    CANVAS.clear();
     female
       .addForce(new Vector(0, 2)) // weight
       .addForce(followMouse(female))
@@ -39,4 +37,4 @@ function run() {
   });
 }
 
-run();
+export default { run };

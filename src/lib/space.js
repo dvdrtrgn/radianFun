@@ -1,3 +1,6 @@
+/*
+  Model 2d space
+*/
 const forceNumber = (x) => Number(x) || 0;
 
 function Space(W, H) {
@@ -34,7 +37,7 @@ function Space(W, H) {
     y: {
       get: () => val.h / 2,
     },
-    valueOf: {
+    toArray: {
       value: () => [this.w, this.h],
     },
     toString: {

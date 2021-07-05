@@ -1,7 +1,7 @@
-function Runner() {
+function Looper() {
   const self = this;
   let run;
-  let loop;
+  let loopFn;
   let start = 0;
   let frames = 0;
   let elapsed = 0;
@@ -18,7 +18,8 @@ function Runner() {
     stop: function () {
       window.removeEventListener('click', self.stop);
       window.addEventListener('click', self.go);
-      loop = function () {
+
+      loopFn = function () {
         self.time.elapsed; // force update
         console.log({
           elapsed,
@@ -30,18 +31,20 @@ function Runner() {
     go: function () {
       window.removeEventListener('click', self.go);
       window.addEventListener('click', self.stop);
+
       start = Date.now() - elapsed; // hacky way to pause
-      (loop = function () {
-        run(), requestAnimationFrame(loop);
+      loopFn = function () {
+        run();
+        requestAnimationFrame(loopFn);
         frames++;
-      })();
-      return self;
+      }
+      loopFn();
     },
     init: function (fn) {
       run = fn;
-      console.log(self.go());
+      self.go();
     },
   });
 }
 
-export default Runner;
+export default Looper;

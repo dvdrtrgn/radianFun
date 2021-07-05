@@ -1,7 +1,7 @@
 const DARK = 'black';
 const MIST = 'rgba(128, 128, 128, 0.2)';
 
-function Draw(id, grid) {
+function Canvas(id, grid) {
   if (!id) return;
   let can = document.getElementById(id);
   let ctx = can.getContext('2d');
@@ -30,4 +30,4 @@ function Draw(id, grid) {
   });
 }
 
-export default Draw;
+export default Canvas;
