@@ -1,0 +1,20 @@
+{
+  "name": "radianfun",
+  "version": "1.0.0",
+  "description": "This folder probably contains a git repo.",
+  "main": "_globs.js",
+  "scripts": {
+    "test": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvdrtrgn/radianFun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvdrtrgn/radianFun/issues"
+  },
+  "homepage": "https://github.com/dvdrtrgn/radianFun#readme"
+}
