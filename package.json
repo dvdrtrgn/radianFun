@@ -1,0 +1,24 @@
+{
+  "name": "radianfun",
+  "version": "1.0.0",
+  "description": "This folder probably contains a git repo.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf .*cache dist",
+    "test": "parcel src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvdrtrgn/radianFun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvdrtrgn/radianFun/issues"
+  },
+  "homepage": "https://github.com/dvdrtrgn/radianFun#readme",
+  "devDependencies": {
+    "eslint": "^7.30.0"
+  }
+}
