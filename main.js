@@ -1,10 +1,12 @@
-/*global Draw, Mover, Runner, Space, Vector, */
 const W = window;
 const C = W.console;
-const AREA = new Space(W.innerWidth, W.innerHeight);
+
+import Mover, { AREA, PAINT } from './Mover';
+import Runner from './Runner';
+import Vector from './Vector';
+
 const LOOP = new Runner();
 const MOUSE = new Vector(AREA.x, AREA.y);
-const PAINT = new Draw('Test', AREA);
 const _watchMouse = function (evt) {
   MOUSE.read(evt.offsetX, evt.offsetY);
 };

@@ -141,4 +141,4 @@ const Vector = (function () {
   return VEC;
 }());
 
-new Vector;
+export default Vector;

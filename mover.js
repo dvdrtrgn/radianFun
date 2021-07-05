@@ -1,5 +1,15 @@
-/*global AREA, PAINT, Vector, */
+const W = window;
+const C = W.console;
+
+import Vector from './Vector';
+import Space from './Space';
+import Draw from './Draw';
+
+export const AREA = new Space(W.innerWidth, W.innerHeight);
+export const PAINT = new Draw('Test', AREA);
+
 const Mover = (function () {
+  console.log('area', AREA)
   const W = window;
   const C = W.console;
 
@@ -76,4 +86,4 @@ const Mover = (function () {
   return MVR;
 }());
 
-new Mover;
+export default Mover;
