@@ -18,11 +18,15 @@ function Space(W, H) {
   Object.defineProperties(this, {
     w: {
       get: () => val.w,
-      set: (w) => (val.w = forceNumber(w)),
+      set: (w) => {
+        val.w = forceNumber(w);
+      },
     },
     h: {
       get: () => val.h,
-      set: (h) => (val.h = forceNumber(h)),
+      set: (h) => {
+        val.h = forceNumber(h);
+      },
     },
     x: {
       get: () => val.w / 2,
