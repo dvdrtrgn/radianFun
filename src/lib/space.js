@@ -45,6 +45,7 @@ function Space(W, H) {
     },
     // get coordinates from set of all positions
     indexPosition: {
+      // TODO implement postion index
       value: function (i, alt) {
         i = i % val.limit;
 

@@ -1,3 +1,8 @@
+/*
+  Model an animation loop
+  - take a function for each available frame
+  Provide access to time/rate stats
+*/
 function Looper() {
   const self = this;
   let run;
@@ -37,7 +42,7 @@ function Looper() {
         run();
         requestAnimationFrame(loopFn);
         frames++;
-      }
+      };
       loopFn();
     },
     init: function (fn) {

@@ -1,13 +1,17 @@
+/*
+  Model a Canvas element
+  Provide helper methods
+*/
 const DARK = 'black';
 const MIST = 'rgba(128, 128, 128, 0.2)';
 
 function Canvas(id, grid) {
   if (!id) return;
-  let can = document.getElementById(id);
-  let ctx = can.getContext('2d');
+  let ele = document.getElementById(id);
+  let ctx = ele.getContext('2d');
 
-  can.width = grid.w;
-  can.height = grid.h;
+  ele.width = grid.w;
+  ele.height = grid.h;
 
   Object.assign(this, {
     circle: function (x, y, radius, color) {
@@ -19,12 +23,12 @@ function Canvas(id, grid) {
       ctx.fill();
     },
     clear: function () {
-      ctx.clearRect(0, 0, can.width, can.height);
+      ctx.clearRect(0, 0, ele.width, ele.height);
       return this;
     },
     fade: function () {
       ctx.fillStyle = MIST;
-      ctx.fillRect(0, 0, can.width, can.height);
+      ctx.fillRect(0, 0, ele.width, ele.height);
       return this;
     },
   });

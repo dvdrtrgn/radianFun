@@ -1,28 +1,32 @@
+/*
+  Model a physical object
+  Provide vectors for velocity, location, acceleration
+*/
 import Vector from './lib/Vector';
-import { SPACE, CANVAS } from './globs';
+import { BOUNDS, CANVAS } from './globs';
 
 function contain(loc, vel) {
   let x = loc.x;
   let y = loc.y;
-  if (x < 0 || x > SPACE.w) {
-    loc.x = x < 0 ? 0 : SPACE.w;
+  if (x < 0 || x > BOUNDS.w) {
+    loc.x = x < 0 ? 0 : BOUNDS.w;
     vel.x *= -0.9;
   }
-  if (y < 0 || y > SPACE.h) {
-    loc.y = y < 0 ? 0 : SPACE.h;
+  if (y < 0 || y > BOUNDS.h) {
+    loc.y = y < 0 ? 0 : BOUNDS.h;
     vel.y *= -0.9;
   }
 }
 
 function display(loc, cf) {
-  CANVAS.circle(loc.x, loc.y, cf.size, cf.color);
+  CANVAS.circle(loc.x, loc.y, cf.mass, cf.color);
 }
 
-function wrap(loc) {
-  if (loc.x > SPACE.w) loc.x = 0;
-  if (loc.x < 0) loc.x = SPACE.w;
-  if (loc.y > SPACE.h) loc.y = 0;
-  if (loc.y < 0) loc.y = SPACE.h;
+function wrapAround(loc) {
+  if (loc.x > BOUNDS.w) loc.x = 0;
+  if (loc.x < 0) loc.x = BOUNDS.w;
+  if (loc.y > BOUNDS.h) loc.y = 0;
+  if (loc.y < 0) loc.y = BOUNDS.h;
 }
 
 function stopped(vel, cf) {
@@ -37,18 +41,22 @@ function stopped(vel, cf) {
 }
 
 // ----------------------------
-function Mover(nom, col, siz) {
+function Mover(nom, obj) {
   const self = this;
   let acc = new Vector();
-  let loc = new Vector(SPACE.x, SPACE.y);
+  let loc = new Vector(BOUNDS.x, BOUNDS.y);
   let vel = new Vector();
-  let cf = {
-    name: nom,
-    color: col || 'black',
-    dead: 0,
-    size: siz || 10,
-    wrap: true,
-  };
+
+  let cf = Object.assign(
+    {
+      name: nom,
+      color: 'black',
+      dead: 0,
+      mass: 10,
+      allowWrap: true,
+    },
+    obj,
+  );
 
   Object.assign(self, {
     addForce: function (force) {
@@ -58,7 +66,7 @@ function Mover(nom, col, siz) {
     update: function () {
       vel.add(acc);
       loc.add(vel);
-      cf.wrap ? wrap(loc) : contain(loc, vel);
+      cf.allowWrap ? wrapAround(loc) : contain(loc, vel);
       acc.mag = 0;
       display(loc, cf);
     },
@@ -66,9 +74,9 @@ function Mover(nom, col, siz) {
       return stopped(vel, cf);
     },
     cf,
+    acc,
     loc,
     vel,
-    nom,
   });
 }
 
