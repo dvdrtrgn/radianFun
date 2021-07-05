@@ -8,7 +8,7 @@ import Vector from './lib/vector.js';
 
 const wind = new Vector(0.5, 0);
 const gravity = new Vector(0, 1);
-let movers = Array(2).fill(0);
+let movers = Array(5).fill(0);
 
 movers = movers
   .map(function () {
@@ -18,7 +18,7 @@ movers = movers
     let m = new Mover(name, mass, radius);
 
     m.cf.color = name;
-    m.cf.wrap = true;
+    m.cf.wrap = !true;
     m.addForce(Vector.random());
 
     return m;
@@ -26,7 +26,7 @@ movers = movers
   .sort((a, b) => a.mass < b.mass); // move bigger to back
 
 LOOP.init(function () {
-  PAINT.clear();
+  // PAINT.clear();
   movers.forEach(function (mover, i) {
     let weight = Vector.mult(gravity, mover.mass);
     let dragF = mover.calcDrag();
