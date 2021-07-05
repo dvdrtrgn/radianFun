@@ -2,9 +2,10 @@
   "name": "radianfun",
   "version": "1.0.0",
   "description": "This folder probably contains a git repo.",
-  "main": "_globs.js",
+  "main": "index.js",
   "scripts": {
-    "test": "parcel index.html"
+    "clean": "rm -rf .*cache dist",
+    "test": "parcel src/index.html"
   },
   "repository": {
     "type": "git",

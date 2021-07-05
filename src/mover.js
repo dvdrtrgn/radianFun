@@ -1,9 +1,9 @@
 const W = window;
 const C = W.console;
 
-import Vector from './Vector';
-import Space from './Space';
-import Draw from './Draw';
+import Vector from './lib/Vector';
+import Space from './lib/Space';
+import Draw from './lib/Draw';
 
 export const AREA = new Space(W.innerWidth, W.innerHeight);
 export const PAINT = new Draw('Test', AREA);

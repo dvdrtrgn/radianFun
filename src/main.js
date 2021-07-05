@@ -2,8 +2,8 @@ const W = window;
 const C = W.console;
 
 import Mover, { AREA, PAINT } from './Mover';
-import Runner from './Runner';
-import Vector from './Vector';
+import Runner from './lib/Runner';
+import Vector from './lib/Vector';
 
 const LOOP = new Runner();
 const MOUSE = new Vector(AREA.x, AREA.y);
