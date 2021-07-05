@@ -1,6 +1,3 @@
-const W = window;
-const C = W.console;
-
 import Mover, { AREA, PAINT } from './Mover';
 import Runner from './lib/Runner';
 import Vector from './lib/Vector';
@@ -13,7 +10,7 @@ const _watchMouse = function (evt) {
 
 // ---------
 // etc
-W.addEventListener('mousemove', _watchMouse);
+window.addEventListener('mousemove', _watchMouse);
 
 function followMouse(mover) {
   let acc = new Vector(MOUSE.x, MOUSE.y).sub(mover.loc);
@@ -29,15 +26,17 @@ function run() {
 
   LOOP.init(function () {
     PAINT.clear();
-    female.addForce(new Vector(0, 2)) // weight
+    female
+      .addForce(new Vector(0, 2)) // weight
       .addForce(followMouse(female))
       .addForce(Vector.random()) // excitement
       .update();
-    male.addForce(new Vector(0, 1)) // weight
+    male
+      .addForce(new Vector(0, 1)) // weight
       .addForce(followMouse(male))
       .addForce(Vector.random()) // excitement
       .update();
   });
 }
 
-window.setTimeout(run, 99);
+run();
